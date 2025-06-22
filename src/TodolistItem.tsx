@@ -1,6 +1,7 @@
 import {Button} from "./Button.tsx";
-import {ChangeEvent, KeyboardEvent, useMemo, useState} from "react";
+import {ChangeEvent, useMemo} from "react";
 import {Task, Todolist} from "./App.tsx";
+import {CreateItemForm} from "./CreateItemForm.tsx";
 
 export type FilterValues = 'all' | 'active' | 'completed'
 
@@ -23,8 +24,6 @@ export const TodolistItem = ({
                                  changeFilter,
                                  deleteTodolist
                              }: Props) => {
-    const [taskTitle, setTaskTitle] = useState<string>('')
-    const [error, setError] = useState<string | null>(null)
 
     const filteredTasks = useMemo(() => {
         switch (todolist.filter) {
@@ -37,45 +36,22 @@ export const TodolistItem = ({
         }
     }, [tasks, todolist.filter])
 
-    const createTaskHandler = () => {
-        const trimmedTitle = taskTitle.trim()
-        if (trimmedTitle) {
-            createTask(todolist.id, trimmedTitle)
-            setTaskTitle('')
-        } else {
-            setError('Title is required')
-        }
-    }
-
-    const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(null)
-        setTaskTitle(e.currentTarget.value)
-    }
-
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, taskId: string) => {
         changeTaskStatus(todolist.id, taskId, e.currentTarget.checked)
+    }
+
+    const createTaskHandler = (title: string) => {
+        createTask(todolist.id, title)
     }
 
     return (
         <div>
             <div className={'container'}>
                 <h3>{todolist.title}</h3>
-                {/* ✅ Прямая передача - нет дополнительной логики */}
                 <Button title={'X'} onClick={() => deleteTodolist(todolist.id)}/>
             </div>
 
-            <div>
-                <input
-                    className={error ? 'error' : ''}
-                    value={taskTitle}
-                    onChange={changeTaskTitleHandler}
-                    onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
-                        e.key === 'Enter' && createTaskHandler()
-                    }
-                />
-                <Button title={'+'} onClick={createTaskHandler}/>
-                {error && <div className={'error-message'}>{error}</div>}
-            </div>
+            <CreateItemForm onCreateItem={createTaskHandler}/>
 
             {filteredTasks.length === 0 ? <p>No tasks</p> :
                 <ul>
@@ -87,7 +63,6 @@ export const TodolistItem = ({
                                 onChange={(e) => changeTaskStatusHandler(e, task.id)}
                             />
                             <span>{task.title}</span>
-                            {/* ✅ Прямая передача - нет дополнительной логики */}
                             <Button title={'x'} onClick={() => deleteTask(todolist.id, task.id)}/>
                         </li>
                     ))}
@@ -95,7 +70,6 @@ export const TodolistItem = ({
             }
 
             <div>
-                {/* ✅ Прямая передача для простых случаев */}
                 <Button
                     title={'All'}
                     onClick={() => changeFilter(todolist.id, 'all')}
@@ -115,3 +89,4 @@ export const TodolistItem = ({
         </div>
     )
 }
+

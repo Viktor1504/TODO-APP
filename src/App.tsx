@@ -1,6 +1,7 @@
 import './App.css'
 import {FilterValues, TodolistItem} from './TodolistItem'
 import {useState} from "react";
+import {CreateItemForm} from "./CreateItemForm.tsx";
 
 export type Task = {
     id: string
@@ -62,12 +63,23 @@ export const App = () => {
 
     const deleteTodolist = (todoListId: string) => {
         setTodolists(todolists.filter((todolist: Todolist) => todolist.id !== todoListId))
-        delete tasks[todoListId]
-        setTasks({...tasks})
+        const {[todoListId]: deletedTasks, ...restTasks} = tasks
+        setTasks(restTasks)
+    }
+
+    const createTodolist = (title: string) => {
+        const newTodolist: Todolist = {
+            id: crypto.randomUUID(),
+            title,
+            filter: 'all'
+        }
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [newTodolist.id]: []})
     }
 
     return (
         <div className="app">
+            <CreateItemForm onCreateItem={createTodolist}/>
             {todolists.map((todolist) => (
                 <TodolistItem
                     key={todolist.id}
