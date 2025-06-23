@@ -1,5 +1,5 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "./Button.tsx";
+import {Button} from "@mui/material";
 
 export const CreateItemForm = ({onCreateItem}: { onCreateItem: (title: string) => void }) => {
     const [error, setError] = useState<string | null>(null)
@@ -37,7 +37,7 @@ export const CreateItemForm = ({onCreateItem}: { onCreateItem: (title: string) =
             onChange={changeTaskTitleHandler}
             onKeyDown={onKeyDownHandler}
         />
-        <Button title={'+'} onClick={addItemHandler}/>
+        <Button variant={'contained'} onClick={addItemHandler}>+</Button>
         {error && <div className={'error-message'}>{error}</div>}
     </div>
 }
