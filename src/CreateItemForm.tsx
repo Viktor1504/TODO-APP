@@ -1,5 +1,7 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import IconButton from '@mui/material/IconButton'
 
 export const CreateItemForm = ({onCreateItem}: { onCreateItem: (title: string) => void }) => {
     const [error, setError] = useState<string | null>(null)
@@ -10,7 +12,7 @@ export const CreateItemForm = ({onCreateItem}: { onCreateItem: (title: string) =
         setTitleValue(e.currentTarget.value)
     }
 
-    const addItemHandler = () => {
+    const createItemHandler = () => {
         const trimmedTitle = titleValue.trim()
 
         if (!trimmedTitle) {
@@ -26,18 +28,23 @@ export const CreateItemForm = ({onCreateItem}: { onCreateItem: (title: string) =
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            addItemHandler()
+            createItemHandler()
         }
     }
 
     return <div>
-        <input
-            className={error ? 'error' : ''}
+        <TextField
+            label={'Enter a title'}
+            variant="outlined"
             value={titleValue}
+            size={'small'}
+            error={!!error}
+            helperText={error}
             onChange={changeTaskTitleHandler}
             onKeyDown={onKeyDownHandler}
         />
-        <Button variant={'contained'} onClick={addItemHandler}>+</Button>
-        {error && <div className={'error-message'}>{error}</div>}
+        <IconButton color="primary" onClick={createItemHandler}>
+            <AddBoxIcon/>
+        </IconButton>
     </div>
 }
