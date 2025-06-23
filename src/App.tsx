@@ -68,15 +68,14 @@ export const App = () => {
     }
 
     const createTodolist = (title: string) => {
-        const newTodolist: Todolist = {
-            id: crypto.randomUUID(),
-            title,
-            filter: 'all'
-        }
+        const newTodolist: Todolist = {id: crypto.randomUUID(), title, filter: 'all'}
         setTodolists([newTodolist, ...todolists])
         setTasks({...tasks, [newTodolist.id]: []})
     }
 
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? { ...task, title } : task)})
+    }
     return (
         <div className="app">
             <CreateItemForm onCreateItem={createTodolist}/>
@@ -90,6 +89,7 @@ export const App = () => {
                     changeTaskStatus={changeTaskStatus}
                     changeFilter={changeFilter}
                     deleteTodolist={deleteTodolist}
+                    changeTaskTitle={changeTaskTitle}
                 />
             ))
             }
