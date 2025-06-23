@@ -1,5 +1,5 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "@mui/material";
+import Button from "@mui/material/Button";
 
 export const CreateItemForm = ({onCreateItem}: { onCreateItem: (title: string) => void }) => {
     const [error, setError] = useState<string | null>(null)

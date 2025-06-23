@@ -1,8 +1,11 @@
-import {Button} from "./Button.tsx";
 import {ChangeEvent, useMemo} from "react";
 import {Task, Todolist} from "./App.tsx";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export type FilterValues = 'all' | 'active' | 'completed'
 
@@ -79,30 +82,26 @@ export const TodolistItem = ({
                                     onChange={(e) => changeTaskStatusHandler(e, task.id)}
                                 />
                                 <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
-                                <Button title={'x'} onClick={() => deleteTask(todolist.id, task.id)}/>
+                                <IconButton>
+                                    <DeleteIcon onClick={() => deleteTask(todolist.id, task.id)}/>
+                                </IconButton>
                             </li>
                         )
                     })}
                 </ul>
             }
 
-            <div>
-                <Button
-                    title={'All'}
-                    onClick={() => changeFilter(todolist.id, 'all')}
-                    className={todolist.filter === 'all' ? 'active-filter' : ''}
-                />
-                <Button
-                    title={'Active'}
-                    onClick={() => changeFilter(todolist.id, 'active')}
-                    className={todolist.filter === 'active' ? 'active-filter' : ''}
-                />
-                <Button
-                    title={'Completed'}
-                    onClick={() => changeFilter(todolist.id, 'completed')}
-                    className={todolist.filter === 'completed' ? 'active-filter' : ''}
-                />
-            </div>
+            <Stack spacing={2} direction="row">
+                <Button variant={todolist.filter === 'all' ? 'contained' : 'outlined'}
+                        onClick={() => changeFilter(todolist.id, 'all')}
+                >All</Button>
+                <Button variant={todolist.filter === 'active' ? 'contained' : 'outlined'}
+                        onClick={() => changeFilter(todolist.id, 'active')}
+                >Active</Button>
+                <Button variant={todolist.filter === 'completed' ? 'contained' : 'outlined'}
+                        onClick={() => changeFilter(todolist.id, 'completed')}
+                >Completed</Button>
+            </Stack>
         </div>
     )
 }
