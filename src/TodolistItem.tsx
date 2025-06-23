@@ -15,6 +15,7 @@ type Props = {
     changeFilter: (todoListId: string, filter: FilterValues) => void
     deleteTodolist: (todolistId: string) => void
     changeTaskTitle: (todoListId: string, taskId: string, title: string) => void
+    changeTodolistTitle: (todoListId: string, title: string) => void
 }
 
 export const TodolistItem = ({
@@ -25,7 +26,8 @@ export const TodolistItem = ({
                                  changeTaskStatus,
                                  changeFilter,
                                  deleteTodolist,
-                                 changeTaskTitle
+                                 changeTaskTitle,
+                                 changeTodolistTitle
                              }: Props) => {
 
     const filteredTasks = useMemo(() => {
@@ -47,11 +49,16 @@ export const TodolistItem = ({
         createTask(todolist.id, title)
     }
 
+    const changeTodolistTitleHandler = (title: string) => {
+        changeTodolistTitle(todolist.id, title)
+    }
 
     return (
         <div>
             <div className={'container'}>
-                <h3>{todolist.title}</h3>
+                <h3>
+                    <EditableSpan value={todolist.title} onChange={changeTodolistTitleHandler}/>
+                </h3>
                 <Button title={'X'} onClick={() => deleteTodolist(todolist.id)}/>
             </div>
 
