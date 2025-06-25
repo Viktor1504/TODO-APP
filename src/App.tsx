@@ -8,7 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import IconButton from "@mui/material/IconButton";
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
-import {Paper} from "@mui/material";
+import Paper from "@mui/material/Paper";
 import {containerSx} from "./TodolistItem.styles.ts";
 import {NavButton} from "./NavButton.ts";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
