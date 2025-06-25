@@ -40,13 +40,13 @@ export const TodolistItem = ({
     const filteredTasks = useMemo(() => {
         switch (todolist.filter) {
             case 'active':
-                return tasks.filter(task => !task.isDone);
+                return tasks?.filter(task => !task.isDone) || []
             case 'completed':
-                return tasks.filter(task => task.isDone);
+                return tasks?.filter(task => task.isDone) || []
             default:
                 return tasks
         }
-    }, [tasks, todolist.filter])
+    }, [tasks, todolist.filter, todolist.id])
 
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>, taskId: string) => {
         changeTaskStatus(todolist.id, taskId, e.currentTarget.checked)
@@ -70,11 +70,9 @@ export const TodolistItem = ({
                     <DeleteIcon onClick={() => deleteTodolist(todolist.id)}/>
                 </IconButton>
             </div>
-
             <CreateItemForm onCreateItem={createTaskHandler}/>
 
-            {!filteredTasks.length ? <p>No tasks</p> :
-                <List>
+            {filteredTasks ? (<List>
                     {filteredTasks.map((task) => {
 
                         const changeTaskTitleHandler = (title: string) => {
@@ -94,7 +92,9 @@ export const TodolistItem = ({
                             </ListItem>
                         )
                     })}
-                </List>
+                </List>)
+                :
+                <p>No tasks</p>
             }
 
             <Stack direction="row" sx={containerSx}>

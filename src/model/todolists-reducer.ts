@@ -8,7 +8,7 @@ export const todolistsReducer = (state: Todolist[] = initialState, action: Todol
         case 'DELETE-TODOLIST':
             return state.filter((tl: any) => tl.id !== action.payload.id)
         case 'CREATE-TODOLIST':
-            return [...state, {id: crypto.randomUUID(), title: action.payload.title, filter: 'all'}]
+            return [...state, {id: action.payload.id, title: action.payload.title, filter: 'all'}]
         case 'CHANGE-TODOLIST-TITLE':
             return state.map((tl: any) => tl.id === action.payload.id ? {...tl, title: action.payload.title} : tl)
         case 'CHANGE-TODOLIST-FILTER':
@@ -20,9 +20,12 @@ export const todolistsReducer = (state: Todolist[] = initialState, action: Todol
 
 export const deleteTodolistAC = (id: string) => ({type: 'DELETE-TODOLIST', payload: {id}} as const)
 
-export const createTodolistAC = (title: string) => ({type: 'CREATE-TODOLIST', payload: {title}} as const)
+export const createTodolistAC = (title: string) => ({
+    type: 'CREATE-TODOLIST',
+    payload: {id: crypto.randomUUID(), title}
+} as const)
 
-export const changeTodolistTitleAC = (id: string, title: string) => ({
+export const changeTodolistTitleAC = ({id, title}: { id: string, title: string }) => ({
     type: 'CHANGE-TODOLIST-TITLE',
     payload: {
         id,
@@ -30,7 +33,7 @@ export const changeTodolistTitleAC = (id: string, title: string) => ({
     }
 } as const)
 
-export const changeTodolistFilterAC = (id: string, filter: FilterValues) => ({
+export const changeTodolistFilterAC = ({id, filter}: { id: string, filter: FilterValues }) => ({
     type: 'CHANGE-TODOLIST-FILTER',
     payload: {
         id,
@@ -38,8 +41,11 @@ export const changeTodolistFilterAC = (id: string, filter: FilterValues) => ({
     }
 } as const)
 
+export type CreateTodolistAction = ReturnType<typeof createTodolistAC>
+export type DeleteTodolistAction = ReturnType<typeof deleteTodolistAC>
+
 export type TodolistsActionsType =
-    ReturnType<typeof deleteTodolistAC> |
-    ReturnType<typeof createTodolistAC> |
+    DeleteTodolistAction |
+    CreateTodolistAction |
     ReturnType<typeof changeTodolistTitleAC> |
     ReturnType<typeof changeTodolistFilterAC>
