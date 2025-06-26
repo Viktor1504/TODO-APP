@@ -1,7 +1,7 @@
 import './App.css'
-import {FilterValues, TodolistItem} from './TodolistItem'
-import {useReducer, useState} from "react";
-import {CreateItemForm} from "./CreateItemForm.tsx";
+import {FilterValues, TodolistItem} from '../TodolistItem.tsx'
+import {useState} from "react";
+import {CreateItemForm} from "../CreateItemForm.tsx";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -9,8 +9,8 @@ import IconButton from "@mui/material/IconButton";
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from "@mui/material/Paper";
-import {containerSx} from "./TodolistItem.styles.ts";
-import {NavButton} from "./NavButton.ts";
+import {containerSx} from "../TodolistItem.styles.ts";
+import {NavButton} from "../NavButton.ts";
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -18,10 +18,13 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     createTodolistAC,
-    deleteTodolistAC,
-    todolistsReducer
-} from "./model/todolists-reducer.ts";
-import {changeTaskAC, createTaskAC, deleteTaskAC, tasksReducer} from "./model/tasks-reducer.ts";
+    deleteTodolistAC
+} from "../model/todolists-reducer.ts";
+import {changeTaskAC, createTaskAC, deleteTaskAC} from "../model/tasks-reducer.ts";
+import {useAppSelector} from "../common/hooks/useAppSelector.ts";
+import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
+import {selectTodolists} from "../model/todolists-selectors.ts";
+import {selectTasks} from "../model/tasks-selectors.ts";
 
 export type Task = {
     id: string
@@ -40,8 +43,10 @@ export type Todolist = {
 type ThemeMode = 'dark' | 'light'
 
 export const App = () => {
-    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [])
-    const [tasks, dispatchToTasks] = useReducer(tasksReducer, {})
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
+
+    const dispatch = useAppDispatch()
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
@@ -59,39 +64,36 @@ export const App = () => {
     }
 
     const deleteTask = (todolistId: string, taskId: string) => {
-        dispatchToTasks(deleteTaskAC({todolistId, taskId}))
+        dispatch(deleteTaskAC({todolistId, taskId}))
     }
 
     const createTask = (todolistId: string, title: string) => {
-        dispatchToTasks(createTaskAC({todolistId, title}))
+        dispatch(createTaskAC({todolistId, title}))
     }
 
     const changeFilter = (id: string, filter: FilterValues) => {
-        dispatchToTodolists(changeTodolistFilterAC({id, filter}))
+        dispatch(changeTodolistFilterAC({id, filter}))
     }
 
     const deleteTodolist = (todoListId: string) => {
-        dispatchToTodolists(deleteTodolistAC(todoListId))
-        dispatchToTasks(deleteTodolistAC(todoListId))
+        dispatch(deleteTodolistAC(todoListId))
     }
 
     const createTodolist = (title: string) => {
-        const action = createTodolistAC(title)
-        dispatchToTodolists(action)
-        dispatchToTasks(createTodolistAC(action.payload.id))
+        dispatch(createTodolistAC(title))
     }
 
     const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        dispatchToTasks(changeTaskAC({todolistId, taskId, updateFields: {title}}))
+        dispatch(changeTaskAC({todolistId, taskId, updateFields: {title}}))
     }
 
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
-        dispatchToTasks(changeTaskAC({todolistId, taskId, updateFields: {isDone}}))
+        dispatch(changeTaskAC({todolistId, taskId, updateFields: {isDone}}))
 
     }
 
     const changeTodolistTitle = (id: string, title: string) => {
-        dispatchToTodolists(changeTodolistTitleAC({id, title}))
+        dispatch(changeTodolistTitleAC({id, title}))
     }
 
     return <div className="app">

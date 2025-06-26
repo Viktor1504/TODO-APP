@@ -1,4 +1,4 @@
-import {Todolist} from "../App.tsx";
+import {Todolist} from "../app/App.tsx";
 import {FilterValues} from "../TodolistItem.tsx";
 
 const initialState: Todolist[] = []

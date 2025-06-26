@@ -1,5 +1,5 @@
 import {ChangeEvent, useMemo} from "react";
-import {Task, Todolist} from "./App.tsx";
+import {Task, Todolist} from "./app/App.tsx";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
 import Button from "@mui/material/Button";
