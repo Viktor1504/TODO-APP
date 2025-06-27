@@ -24,4 +24,3 @@ export const TodolistItem = ({todolist}: { todolist: Todolist }) => {
         </div>
     )
 }
-
