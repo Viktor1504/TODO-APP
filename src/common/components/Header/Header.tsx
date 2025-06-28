@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import {NavButton} from "@/common/components/NavButton/NavButton.ts";
 import Switch from "@mui/material/Switch";
-import {containerSx} from "@/common/styles/container.styles.ts";
+import {containerSx} from "@/common/styles";
 
 export const Header = () => {
     const themeMode = useAppSelector(selectThemeMode)
