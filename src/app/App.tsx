@@ -2,10 +2,10 @@ import './App.css'
 import {ThemeProvider} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import {useAppSelector} from "../common/hooks/useAppSelector.ts";
-import {selectThemeMode} from "../model/app-selectors.ts";
+import {selectThemeMode} from "@/app/app-selectors.ts";
 import {getTheme} from "../common/theme/theme.ts";
 import {Header} from "@/common/components/Header/Header.tsx";
-import {FilterValues} from "@/TodolistItem.tsx";
+import {FilterValues} from "@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx";
 import {Main} from "@/app/Main.tsx";
 
 export type Task = {
@@ -28,7 +28,7 @@ export const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className="app">
+            <div className={"app"}>
                 <CssBaseline/>
                 <Header/>
                 <Main/>

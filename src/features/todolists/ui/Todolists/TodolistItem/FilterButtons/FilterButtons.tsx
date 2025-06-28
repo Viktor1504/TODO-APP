@@ -1,10 +1,10 @@
 import {useAppDispatch} from "@/common/hooks/useAppDispatch.ts";
 import {Todolist} from "@/app/App.tsx";
-import {FilterValues} from "@/TodolistItem.tsx";
-import {changeTodolistFilterAC} from "@/model/todolists-reducer.ts";
-import {containerSx} from "@/TodolistItem.styles.ts";
+import {FilterValues} from "@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx";
+import {changeTodolistFilterAC} from "@/features/todolists/model/todolists-reducer.ts";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import {containerSx} from "@/common/styles/container.styles.ts";
 
 export const FilterButtons = ({todolist}: { todolist: Todolist }) => {
     const {id, filter} = todolist

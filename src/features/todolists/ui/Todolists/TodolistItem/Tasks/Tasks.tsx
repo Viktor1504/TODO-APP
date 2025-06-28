@@ -1,9 +1,9 @@
 import {useAppSelector} from "@/common/hooks/useAppSelector.ts";
-import {selectTasks} from "@/model/tasks-selectors.ts";
+import {selectTasks} from "@/features/todolists/model/tasks-selectors.ts";
 import {useMemo} from "react";
 import {Todolist} from "@/app/App.tsx";
 import {List} from "@mui/material";
-import {TaskItem} from "@/TaskItem.tsx";
+import {TaskItem} from "@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.tsx";
 
 export const Tasks = ({todolist}: { todolist: Todolist }) => {
     const tasks = useAppSelector(selectTasks)[todolist.id]

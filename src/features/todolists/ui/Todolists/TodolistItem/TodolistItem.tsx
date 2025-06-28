@@ -1,10 +1,10 @@
-import {Todolist} from "./app/App.tsx";
-import {CreateItemForm} from "./CreateItemForm.tsx";
+import {Todolist} from "../../../../../app/App.tsx";
+import {CreateItemForm} from "../../../../../common/components/CreateItemForm/CreateItemForm.tsx";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch.ts";
-import {createTaskAC} from "@/model/tasks-reducer.ts";
-import {TodolistTitle} from "@/TodolistTitle.tsx";
-import {Tasks} from "@/Tasks.tsx";
-import {FilterButtons} from "@/FilterButtons.tsx";
+import {createTaskAC} from "@/features/todolists/model/tasks-reducer.ts";
+import {TodolistTitle} from "@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle.tsx";
+import {Tasks} from "@/features/todolists/ui/Todolists/TodolistItem/Tasks/Tasks.tsx";
+import {FilterButtons} from "@/features/todolists/ui/Todolists/TodolistItem/FilterButtons/FilterButtons.tsx";
 
 export type FilterValues = 'all' | 'active' | 'completed'
 
