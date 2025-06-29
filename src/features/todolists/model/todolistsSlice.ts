@@ -2,7 +2,7 @@ import { Todolist } from '@/app/App.tsx'
 import { createSlice, nanoid } from '@reduxjs/toolkit'
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
 
-const todolistSlice = createSlice({
+export const todolistSlice = createSlice({
   name: 'todolists',
   initialState: [] as Todolist[],
   reducers: (create) => ({
