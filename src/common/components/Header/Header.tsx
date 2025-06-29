@@ -3,7 +3,6 @@ import { useAppSelector } from '@/common/hooks/useAppSelector.ts'
 import { selectThemeMode } from '@/app/app-selectors.ts'
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
 import { getTheme } from '@/common/theme/theme.ts'
-import { changeThemeModeAC } from '@/app/app-reducer.ts'
 import Toolbar from '@mui/material/Toolbar'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
@@ -11,6 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { NavButton } from '@/common/components/NavButton/NavButton.ts'
 import Switch from '@mui/material/Switch'
 import { containerSx } from '@/common/styles'
+import { changeThemeMode } from '@/app/app-slice.ts'
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -20,7 +20,7 @@ export const Header = () => {
   const theme = getTheme(themeMode)
 
   const changeMode = () => {
-    dispatch(changeThemeModeAC({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
+    dispatch(changeThemeMode({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
   }
 
   return (
