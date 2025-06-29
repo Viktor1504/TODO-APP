@@ -1,13 +1,10 @@
-import axios from "axios";
-
-const token = ''
-const apiKey = ''
+import axios from 'axios'
 
 export const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-    withCredentials: true,
-    headers: {
-        Authorization: `Bearer ${token}`,
-        'API-KEY': apiKey
-    }
+  baseURL: import.meta.env.VITE_BASE_URL,
+  withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+    'API-KEY': import.meta.env.VITE_API_KEY,
+  },
 })
