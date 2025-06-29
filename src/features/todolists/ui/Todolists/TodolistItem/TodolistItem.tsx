@@ -1,9 +1,9 @@
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
-import { createTaskAC } from '@/features/todolists/model/tasks-reducer.ts'
 import { TodolistTitle } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle.tsx'
 import { CreateItemForm } from '@/common/components'
 import { Todolist } from '@/app/App.tsx'
 import { FilterButtons, Tasks } from '@/features/todolists/ui/Todolists/TodolistItem'
+import { createTaskAC } from '@/features/todolists/model/tasksSlice.ts'
 
 export type FilterValues = 'all' | 'active' | 'completed'
 

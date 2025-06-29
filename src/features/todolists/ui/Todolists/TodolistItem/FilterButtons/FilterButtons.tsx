@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
 import { Todolist } from '@/app/App.tsx'
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
-import { changeTodolistFilterAC } from '@/features/todolists/model/todolists-reducer.ts'
+import { changeTodolistFilterAC } from '@/features/todolists/model/todolistsSlice.ts'
 import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import { containerSx } from '@/common/styles/container.styles.ts'

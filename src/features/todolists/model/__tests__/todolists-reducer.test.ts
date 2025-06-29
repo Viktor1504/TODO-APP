@@ -6,7 +6,7 @@ import {
   createTodolistAC,
   deleteTodolistAC,
   todolistsReducer,
-} from '../todolists-reducer.ts'
+} from '../todolistsSlice.ts'
 import { nanoid } from '@reduxjs/toolkit'
 
 let todolistId1: string
