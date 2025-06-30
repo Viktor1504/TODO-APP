@@ -1,6 +1,5 @@
 import AppBar from '@mui/material/AppBar'
 import { useAppSelector } from '@/common/hooks/useAppSelector.ts'
-import { selectThemeMode } from '@/app/app-selectors.ts'
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
 import { getTheme } from '@/common/theme/theme.ts'
 import Toolbar from '@mui/material/Toolbar'
@@ -10,7 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { NavButton } from '@/common/components/NavButton/NavButton.ts'
 import Switch from '@mui/material/Switch'
 import { containerSx } from '@/common/styles'
-import { changeThemeMode } from '@/app/appSlice.ts'
+import { changeThemeMode, selectThemeMode } from '@/app/appSlice.ts'
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)

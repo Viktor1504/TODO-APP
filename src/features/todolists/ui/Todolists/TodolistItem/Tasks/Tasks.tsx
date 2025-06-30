@@ -1,9 +1,9 @@
 import { selectTasks } from '@/features/todolists/model/tasks-selectors.ts'
 import { useMemo } from 'react'
-import { Todolist } from '@/app/App.tsx'
 import { List } from '@mui/material'
 import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem'
 import { useAppSelector } from '@/common/hooks'
+import { Todolist } from '@/features/todolists/api/todolistsApi.types.ts'
 
 export const Tasks = ({ todolist }: { todolist: Todolist }) => {
   const tasks = useAppSelector(selectTasks)[todolist.id]
@@ -21,7 +21,7 @@ export const Tasks = ({ todolist }: { todolist: Todolist }) => {
 
   return (
     <>
-      {filteredTasks.length > 0 ? (
+      {filteredTasks?.length > 0 ? (
         <List>
           {filteredTasks.map((task) => (
             <TaskItem key={task.id} task={task} todolistId={todolist.id} />
