@@ -1,13 +1,13 @@
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
-import { createTaskAC } from '@/features/todolists/model/tasks-reducer.ts'
 import { TodolistTitle } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle.tsx'
 import { CreateItemForm } from '@/common/components'
-import { Todolist } from '@/app/App.tsx'
 import { FilterButtons, Tasks } from '@/features/todolists/ui/Todolists/TodolistItem'
+import { createTaskAC } from '@/features/todolists/model/tasksSlice.ts'
+import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 
 export type FilterValues = 'all' | 'active' | 'completed'
 
-export const TodolistItem = ({ todolist }: { todolist: Todolist }) => {
+export const TodolistItem = ({ todolist }: { todolist: DomainTodolist }) => {
   const dispatch = useAppDispatch()
 
   const createTask = (title: string) => {

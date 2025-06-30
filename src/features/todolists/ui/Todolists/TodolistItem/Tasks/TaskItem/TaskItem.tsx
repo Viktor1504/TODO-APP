@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
 import { ChangeEvent } from 'react'
-import { changeTaskAC, deleteTaskAC } from '@/features/todolists/model/tasks-reducer.ts'
+import { changeTaskAC, deleteTaskAC } from '@/features/todolists/model/tasksSlice.ts'
 import { Task } from '@/app/App.tsx'
 import { Checkbox, ListItem } from '@mui/material'
 import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
