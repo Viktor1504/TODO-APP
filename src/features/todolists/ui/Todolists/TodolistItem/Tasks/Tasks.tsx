@@ -3,9 +3,9 @@ import { useMemo } from 'react'
 import { List } from '@mui/material'
 import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem'
 import { useAppSelector } from '@/common/hooks'
-import { Todolist } from '@/features/todolists/api/todolistsApi.types.ts'
+import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 
-export const Tasks = ({ todolist }: { todolist: Todolist }) => {
+export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
   const tasks = useAppSelector(selectTasks)[todolist.id]
 
   const filteredTasks = useMemo(() => {

@@ -6,7 +6,7 @@ export type DomainTodolist = Todolist & {
   filter: FilterValues
 }
 
-export const todolistSlice = createSlice({
+export const todolistsSlice = createSlice({
   name: 'todolists',
   initialState: [] as DomainTodolist[],
   reducers: (create) => ({
@@ -46,5 +46,5 @@ export const todolistSlice = createSlice({
 })
 
 export const { setTodolistsAC, createTodolistAC, deleteTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC } =
-  todolistSlice.actions
-export const todolistsReducer = todolistSlice.reducer
+  todolistsSlice.actions
+export const todolistsReducer = todolistsSlice.reducer
