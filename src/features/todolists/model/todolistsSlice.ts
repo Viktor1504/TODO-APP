@@ -1,18 +1,17 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit'
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
 import { Todolist } from '@/features/todolists/api/todolistsApi.types.ts'
+import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
 
 export type DomainTodolist = Todolist & {
   filter: FilterValues
+  entityStatus: 'idle' | 'loading' | 'failed'
 }
 
 export const todolistsSlice = createSlice({
   name: 'todolists',
   initialState: [] as DomainTodolist[],
   reducers: (create) => ({
-    setTodolistsAC: create.reducer<{ todolists: Todolist[] }>((_, action) => {
-      return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all' }))
-    }),
     deleteTodolistAC: create.reducer<{ id: string }>((state, action) => {
       const index = state.findIndex((tl) => tl.id === action.payload.id)
       if (index !== -1) {
@@ -39,12 +38,26 @@ export const todolistsSlice = createSlice({
         },
       }),
       (state, action) => {
-        state.unshift({ ...action.payload, filter: 'all', addedDate: '', order: 0 })
+        state.unshift({ ...action.payload, filter: 'all', addedDate: '', order: 0, entityStatus: 'idle' })
       },
     ),
   }),
+  extraReducers: (builder) => {
+    builder.addCase(fetchTodolistsTC.fulfilled, (_, action) => {
+      return action.payload?.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
+    })
+  },
 })
 
-export const { setTodolistsAC, createTodolistAC, deleteTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC } =
+export const { createTodolistAC, deleteTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC } =
   todolistsSlice.actions
 export const todolistsReducer = todolistsSlice.reducer
+
+export const fetchTodolistsTC = createAsyncThunk(`${todolistsSlice.name}/fetchTodolistsTC`, async () => {
+  try {
+    const res = await todolistsApi.getTodolists()
+    return { todolists: res.data }
+  } catch (error) {
+    console.log(error)
+  }
+})
