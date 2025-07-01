@@ -1,10 +1,10 @@
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
-import { Todolist } from '@/app/App.tsx'
-import { changeTodolistTitleAC, deleteTodolistAC } from '@/features/todolists/model/todolistsSlice.ts'
+import { changeTodolistTitleTC, deleteTodolistTC } from '@/features/todolists/model/todolistsSlice.ts'
 import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import styles from './TodolistTitle.module.css'
+import { Todolist } from '@/features/todolists/api/todolistsApi.types.ts'
 
 export const TodolistTitle = ({ todolist }: { todolist: Todolist }) => {
   const { id, title } = todolist
@@ -12,11 +12,11 @@ export const TodolistTitle = ({ todolist }: { todolist: Todolist }) => {
   const dispatch = useAppDispatch()
 
   const deleteTodolist = () => {
-    dispatch(deleteTodolistAC({ id }))
+    dispatch(deleteTodolistTC(id))
   }
 
   const changeTodolistTitle = (title: string) => {
-    dispatch(changeTodolistTitleAC({ id, title }))
+    dispatch(changeTodolistTitleTC({ id, title }))
   }
 
   return (

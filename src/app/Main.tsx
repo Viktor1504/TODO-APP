@@ -3,13 +3,13 @@ import { CreateItemForm } from '@/common/components/CreateItemForm/CreateItemFor
 import Container from '@mui/material/Container'
 import { Grid } from '@mui/material'
 import { Todolists } from '@/features/todolists/ui/Todolists/Todolists.tsx'
-import { createTodolistAC } from '@/features/todolists/model/todolistsSlice.ts'
+import { createTodolistTC } from '@/features/todolists/model/todolistsSlice.ts'
 
 export const Main = () => {
   const dispatch = useAppDispatch()
 
   const createTodolist = (title: string) => {
-    dispatch(createTodolistAC(title))
+    dispatch(createTodolistTC(title))
   }
 
   return (
