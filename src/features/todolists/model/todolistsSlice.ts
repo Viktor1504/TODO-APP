@@ -19,7 +19,7 @@ export const todolistsSlice = createAppSlice({
                     const res = await todolistsApi.getTodolists()
                     return {todolists: res.data}
                 } catch (error) {
-                    return thunkAPI.rejectWithValue(null)
+                    return thunkAPI.rejectWithValue(error)
                 }
             },
             {
