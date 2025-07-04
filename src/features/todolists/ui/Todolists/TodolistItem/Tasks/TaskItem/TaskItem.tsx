@@ -14,7 +14,7 @@ export const TaskItem = ({task, todolistId}: { task: DomainTask; todolistId: str
 
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
         const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New;
-        dispatch(updateTaskTC({todolistId, taskId: task.id, updateFields: {status}}));
+        dispatch(updateTaskTC({todolistId, taskId: task.id, domainModel: {status}}));
     };
 
     const deleteTask = () => {
@@ -22,7 +22,7 @@ export const TaskItem = ({task, todolistId}: { task: DomainTask; todolistId: str
     }
 
     const changeTaskTitle = (title: string) => {
-        dispatch(updateTaskTC({todolistId, taskId: task.id, updateFields: {title}}))
+        dispatch(updateTaskTC({todolistId, taskId: task.id, domainModel: {title}}))
     }
 
     return (

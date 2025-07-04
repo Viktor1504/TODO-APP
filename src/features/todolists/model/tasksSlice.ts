@@ -2,7 +2,6 @@ import {createTodolistTC, deleteTodolistTC} from '@/features/todolists/model/tod
 import {createAppSlice} from "@/common/utils";
 import {tasksApi} from "@/features/todolists/api/tasksApi.ts";
 import {TasksState, UpdateTaskModel} from "@/features/todolists/api/tasksApi.types.ts";
-import {TaskStatus} from "@/common/enums.ts";
 import {RootState} from "@/app/store.ts";
 import {setAppStatus} from "@/app/appSlice.ts";
 
@@ -51,17 +50,17 @@ export const tasksSlice = createAppSlice({
             async (payload: {
                 todolistId: string,
                 taskId: string,
-                updateFields: { title?: string; status?: TaskStatus }
+                domainModel: Partial<UpdateTaskModel>
             }, {dispatch, rejectWithValue, getState}) => {
-                const {todolistId, taskId, updateFields} = payload
+                const {todolistId, taskId, domainModel} = payload
                 const allTodolistTasks = (getState() as RootState).tasks[todolistId]
                 const task = allTodolistTasks.find(t => t.id === taskId)
                 if (!task) {
                     return rejectWithValue(null)
                 }
                 const model: UpdateTaskModel = {
-                    status: updateFields.status ?? task.status,
-                    title: updateFields.title ?? task.title,
+                    status: domainModel.status ?? task.status,
+                    title: domainModel.title ?? task.title,
                     description: task.description,
                     priority: task.priority,
                     startDate: task.startDate,
