@@ -1,9 +1,8 @@
 import {createTodolistTC, deleteTodolistTC} from '@/features/todolists/model/todolistsSlice.ts'
 import {createAppSlice} from "@/common/utils";
 import {tasksApi} from "@/features/todolists/api/tasksApi.ts";
-import {DomainTask, TasksState, UpdateTaskModel} from "@/features/todolists/api/tasksApi.types.ts";
-import {TaskPriority, TaskStatus} from "@/common/enums.ts";
-import {nanoid} from "@reduxjs/toolkit";
+import {TasksState, UpdateTaskModel} from "@/features/todolists/api/tasksApi.types.ts";
+import {TaskStatus} from "@/common/enums.ts";
 import {RootState} from "@/app/store.ts";
 
 export const tasksSlice = createAppSlice({
@@ -57,8 +56,8 @@ export const tasksSlice = createAppSlice({
                     return rejectWithValue(null)
                 }
                 const model: UpdateTaskModel = {
-                    status: updateFields.status || task.status,
-                    title: updateFields.title || task.title,
+                    status: updateFields.status ?? task.status,
+                    title: updateFields.title ?? task.title,
                     description: task.description,
                     priority: task.priority,
                     startDate: task.startDate,
@@ -82,21 +81,24 @@ export const tasksSlice = createAppSlice({
                 }
             }
         ),
-        createTaskAC: create.reducer<{ todolistId: string; title: string }>((state, action) => {
-            const newTask: DomainTask = {
-                title: action.payload.title,
-                todoListId: action.payload.todolistId,
-                startDate: '',
-                priority: TaskPriority.Low,
-                description: '',
-                deadline: '',
-                status: TaskStatus.New,
-                addedDate: '',
-                order: 0,
-                id: nanoid(),
+        createTaskTC: create.asyncThunk(
+            async (payload: { todolistId: string, title: string }, {rejectWithValue}) => {
+                const {todolistId, title} = payload
+                try {
+                    const res = await tasksApi.createTask(todolistId, title)
+                    return {task: res.data.data.item}
+                } catch (error) {
+                    return rejectWithValue(null)
+                }
+            },
+            {
+                fulfilled: (state, action) => {
+                    const {task} = action.payload
+                    const {todoListId} = task
+                    state[todoListId].unshift(task)
+                }
             }
-            state[action.payload.todolistId].unshift(newTask)
-        }),
+        )
     }),
     extraReducers: (builder) => {
         builder.addCase(createTodolistTC.fulfilled, (state, action) => {
@@ -111,6 +113,6 @@ export const tasksSlice = createAppSlice({
     },
 })
 
-export const {fetchTasksTC, createTaskAC, deleteTaskTC, updateTaskTC} = tasksSlice.actions
+export const {fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC} = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
 export const {selectTasks} = tasksSlice.selectors

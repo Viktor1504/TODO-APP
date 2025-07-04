@@ -13,10 +13,9 @@ export const TaskItem = ({task, todolistId}: { task: DomainTask; todolistId: str
     const dispatch = useAppDispatch()
 
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
-        const status = e.currentTarget.checked ? TaskStatus.New : TaskStatus.Completed
-        console.log(status)
-        dispatch(updateTaskTC({todolistId, taskId: task.id, updateFields: {status}}))
-    }
+        const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New;
+        dispatch(updateTaskTC({todolistId, taskId: task.id, updateFields: {status}}));
+    };
 
     const deleteTask = () => {
         dispatch(deleteTaskTC({todolistId, taskId: task.id}))
@@ -29,7 +28,7 @@ export const TaskItem = ({task, todolistId}: { task: DomainTask; todolistId: str
     return (
         <ListItem sx={getListItemSx(task.status)}>
             <div>
-                <Checkbox onChange={changeTaskStatus}/>
+                <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatus}/>
                 <EditableSpan value={task.title} onChange={changeTaskTitle}/>
             </div>
             <IconButton onClick={deleteTask}>
