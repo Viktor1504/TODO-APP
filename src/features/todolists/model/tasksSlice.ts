@@ -28,12 +28,15 @@ export const tasksSlice = createAppSlice({
             }
         ),
         deleteTaskTC: create.asyncThunk(
-            async (payload: { todolistId: string, taskId: string }, {rejectWithValue}) => {
+            async (payload: { todolistId: string, taskId: string }, {dispatch, rejectWithValue}) => {
                 const {todolistId, taskId} = payload
                 try {
+                    dispatch(setAppStatus({status: 'loading'}))
                     await tasksApi.deleteTask(todolistId, taskId)
+                    dispatch(setAppStatus({status: 'succeeded'}))
                     return payload
                 } catch (error) {
+                    dispatch(setAppStatus({status: 'failed'}))
                     return rejectWithValue(error)
                 }
             },
