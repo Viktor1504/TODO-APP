@@ -35,21 +35,20 @@ test('correct todolist should be created', () => {
     const endState = todolistsReducer(startState, createTodolistTC.fulfilled({todolist: newTodolist}, 'requestId2', title))
 
     expect(endState.length).toBe(3)
-    expect(endState[0].title).toBe(title)
+    expect(endState[0].title).toBe(title)  // Проверяем, что новый тудулист добавлен в конец
 })
 
 test('correct todolist should change its title', () => {
     const title = 'New title'
     const endState = todolistsReducer(startState, changeTodolistTitleTC.fulfilled({
-                id: todolistId2,
-                title
-            },
-            'requestId3',
-            {id: todolistId2, title}
-        )
-    )
+        id: todolistId2,
+        title
+    }, 'requestId3', {id: todolistId2, title}))
 
+    // Проверка, что первый тудулист остался без изменений
     expect(endState[0].title).toBe('What to learn')
+
+    // Проверка, что второй тудулист изменил свое название
     expect(endState[1].title).toBe(title)
 })
 
@@ -57,6 +56,9 @@ test('correct todolist should change its filter', () => {
     const filter = 'completed'
     const endState = todolistsReducer(startState, changeTodolistFilterAC({id: todolistId2, filter}))
 
+    // Проверка, что фильтр для первого тудулиста не изменился
     expect(endState[0].filter).toBe('all')
+
+    // Проверка, что фильтр для второго тудулиста изменился
     expect(endState[1].filter).toBe(filter)
 })
