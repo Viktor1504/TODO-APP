@@ -1,9 +1,10 @@
 import {createTodolistTC, deleteTodolistTC} from '@/features/todolists/model/todolistsSlice.ts'
-import {createAppSlice} from "@/common/utils";
+import {createAppSlice, handleServerAppError, handleServerNetworkError} from "@/common/utils";
 import {tasksApi} from "@/features/todolists/api/tasksApi.ts";
 import {TasksState, UpdateTaskModel} from "@/features/todolists/api/tasksApi.types.ts";
 import {RootState} from "@/app/store.ts";
 import {setAppStatus} from "@/app/appSlice.ts";
+import {ResultCode} from "@/common/enums.ts";
 
 export const tasksSlice = createAppSlice({
     name: 'tasks',
@@ -17,7 +18,7 @@ export const tasksSlice = createAppSlice({
                     dispatch(setAppStatus({status: 'succeeded'}))
                     return {todolistId, tasks: res.data.items}
                 } catch (error) {
-                    dispatch(setAppStatus({status: 'failed'}))
+                    handleServerNetworkError(error, dispatch)
                     return rejectWithValue(error)
                 }
             },
@@ -32,11 +33,16 @@ export const tasksSlice = createAppSlice({
                 const {todolistId, taskId} = payload
                 try {
                     dispatch(setAppStatus({status: 'loading'}))
-                    await tasksApi.deleteTask(todolistId, taskId)
-                    dispatch(setAppStatus({status: 'succeeded'}))
-                    return payload
+                    const res = await tasksApi.deleteTask(todolistId, taskId)
+                    if (res.data.resultCode === ResultCode.Success) {
+                        dispatch(setAppStatus({status: 'succeeded'}))
+                        return payload
+                    } else {
+                        handleServerAppError(res.data, dispatch)
+                        return rejectWithValue(null)
+                    }
                 } catch (error) {
-                    dispatch(setAppStatus({status: 'failed'}))
+                    handleServerNetworkError(error, dispatch)
                     return rejectWithValue(error)
                 }
             },
@@ -72,10 +78,15 @@ export const tasksSlice = createAppSlice({
                 try {
                     dispatch(setAppStatus({status: 'loading'}))
                     const res = await tasksApi.updateTask({todolistId, taskId, model})
-                    dispatch(setAppStatus({status: 'succeeded'}))
-                    return {task: res.data.data.item}
+                    if (res.data.resultCode === ResultCode.Success) {
+                        dispatch(setAppStatus({status: "succeeded"}))
+                        return {task: res.data.data.item}
+                    } else {
+                        handleServerAppError(res.data, dispatch)
+                        return rejectWithValue(null)
+                    }
                 } catch (error) {
-                    dispatch(setAppStatus({status: 'failed'}))
+                    handleServerNetworkError(error, dispatch)
                     return rejectWithValue(error)
                 }
             },
@@ -96,10 +107,15 @@ export const tasksSlice = createAppSlice({
                 try {
                     dispatch(setAppStatus({status: 'loading'}))
                     const res = await tasksApi.createTask(todolistId, title)
-                    dispatch(setAppStatus({status: 'succeeded'}))
-                    return {task: res.data.data.item}
+                    if (res.data.resultCode === ResultCode.Success) {
+                        dispatch(setAppStatus({status: "succeeded"}))
+                        return {task: res.data.data.item}
+                    } else {
+                        handleServerAppError(res.data, dispatch)
+                        return rejectWithValue(null)
+                    }
                 } catch (error) {
-                    dispatch(setAppStatus({status: 'failed'}))
+                    handleServerNetworkError(error, dispatch)
                     return rejectWithValue(null)
                 }
             },

@@ -8,8 +8,13 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import {getListItemSx} from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.styles.ts'
 import {DomainTask} from "@/features/todolists/api/tasksApi.types.ts";
 import {TaskStatus} from "@/common/enums.ts";
+import {DomainTodolist} from "@/features/todolists/model/todolistsSlice.ts";
 
-export const TaskItem = ({task, todolistId}: { task: DomainTask; todolistId: string }) => {
+export const TaskItem = ({task, todolistId, todolist}: {
+    task: DomainTask;
+    todolistId: string;
+    todolist: DomainTodolist
+}) => {
     const dispatch = useAppDispatch()
 
     const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
@@ -28,10 +33,12 @@ export const TaskItem = ({task, todolistId}: { task: DomainTask; todolistId: str
     return (
         <ListItem sx={getListItemSx(task.status)}>
             <div>
-                <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatus}/>
-                <EditableSpan value={task.title} onChange={changeTaskTitle}/>
+                <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatus}
+                          disabled={todolist.entityStatus === 'loading'}/>
+                <EditableSpan value={task.title} onChange={changeTaskTitle}
+                              disabled={todolist.entityStatus === 'loading'}/>
             </div>
-            <IconButton onClick={deleteTask}>
+            <IconButton onClick={deleteTask} disabled={todolist.entityStatus === 'loading'}>
                 <DeleteIcon/>
             </IconButton>
         </ListItem>
