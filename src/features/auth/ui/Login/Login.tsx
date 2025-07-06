@@ -8,7 +8,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Grid from "@mui/material/Grid";
-import {selectThemeMode} from "@/app/appSlice.ts";
+import {selectThemeMode} from "@/app/appSlice.ts"
 
 export const Login = () => {
     const themeMode = useAppSelector(selectThemeMode)
