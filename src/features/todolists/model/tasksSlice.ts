@@ -18,7 +18,7 @@ export const tasksSlice = createAppSlice({
                     dispatch(setAppStatus({status: 'succeeded'}))
                     return {todolistId, tasks: res.data.items}
                 } catch (error) {
-                    dispatch(setAppStatus({status: 'failed'}))
+                    handleServerNetworkError(error, dispatch)
                     return rejectWithValue(error)
                 }
             },
@@ -33,11 +33,16 @@ export const tasksSlice = createAppSlice({
                 const {todolistId, taskId} = payload
                 try {
                     dispatch(setAppStatus({status: 'loading'}))
-                    await tasksApi.deleteTask(todolistId, taskId)
-                    dispatch(setAppStatus({status: 'succeeded'}))
-                    return payload
+                    const res = await tasksApi.deleteTask(todolistId, taskId)
+                    if (res.data.resultCode === ResultCode.Success) {
+                        dispatch(setAppStatus({status: 'succeeded'}))
+                        return payload
+                    } else {
+                        handleServerAppError(res.data, dispatch)
+                        return rejectWithValue(null)
+                    }
                 } catch (error) {
-                    dispatch(setAppStatus({status: 'failed'}))
+                    handleServerNetworkError(error, dispatch)
                     return rejectWithValue(error)
                 }
             },
