@@ -18,8 +18,8 @@ beforeEach(() => {
     todolistId2 = nanoid()
 
     startState = [
-        {id: todolistId1, title: 'What to learn', addedDate: '', order: 0, filter: 'all'},
-        {id: todolistId2, title: 'What to buy', addedDate: '', order: 0, filter: 'all'},
+        {id: todolistId1, title: 'What to learn', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle'},
+        {id: todolistId2, title: 'What to buy', addedDate: '', order: 0, filter: 'all', entityStatus: 'idle'},
     ]
 })
 
@@ -31,7 +31,14 @@ test('correct todolist should be deleted', () => {
 
 test('correct todolist should be created', () => {
     const title = 'New todolist'
-    const newTodolist: DomainTodolist = {id: nanoid(), title, addedDate: 'testText', order: 2, filter: 'all'}
+    const newTodolist: DomainTodolist = {
+        id: nanoid(),
+        title,
+        addedDate: 'testText',
+        order: 2,
+        filter: 'all',
+        entityStatus: 'idle'
+    }
     const endState = todolistsReducer(startState, createTodolistTC.fulfilled({todolist: newTodolist}, 'requestId2', title))
 
     expect(endState.length).toBe(3)

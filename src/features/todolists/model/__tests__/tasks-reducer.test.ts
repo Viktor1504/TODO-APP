@@ -69,7 +69,14 @@ beforeEach(() => {
 
 test('array should be created for new todolist', () => {
     const title = 'New todolist'
-    const newTodolist: DomainTodolist = {id: nanoid(), title, addedDate: 'testText', order: 2, filter: 'all'}
+    const newTodolist: DomainTodolist = {
+        id: nanoid(),
+        title,
+        addedDate: 'testText',
+        order: 2,
+        filter: 'all',
+        entityStatus: 'idle'
+    }
     const endState = tasksReducer(startState, createTodolistTC.fulfilled({todolist: newTodolist}, 'requestId2', title))
 
     const newKey = Object.keys(endState).find(key => key !== 'todolistId1' && key !== 'todolistId2')
