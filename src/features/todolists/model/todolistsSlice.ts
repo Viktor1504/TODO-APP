@@ -1,5 +1,5 @@
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
-import { Todolist } from '@/features/todolists/api/todolistsApi.types.ts'
+import { Todolist, todolistSchema } from '@/features/todolists/api/todolistsApi.types.ts'
 import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
 import { setAppStatus } from '@/app/appSlice.ts'
@@ -20,6 +20,7 @@ export const todolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatus({ status: 'loading' }))
           const res = await todolistsApi.getTodolists()
+          todolistSchema.array().parse(res.data)
           dispatch(setAppStatus({ status: 'succeeded' }))
           return { todolists: res.data }
         } catch (error) {
