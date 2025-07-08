@@ -5,15 +5,18 @@ import { createAppSlice, handleServerAppError, handleServerNetworkError } from '
 import { setAppStatus } from '@/app/appSlice.ts'
 import { RequestStatus } from '@/common/types'
 import { ResultCode } from '@/common/enums.ts'
+import { clearDataAC } from '@/common/actions'
 
 export type DomainTodolist = Todolist & {
   filter: FilterValues
   entityStatus: RequestStatus
 }
 
+const initialState: DomainTodolist[] = []
+
 export const todolistsSlice = createAppSlice({
   name: 'todolists',
-  initialState: [] as DomainTodolist[],
+  initialState,
   reducers: (create) => ({
     fetchTodolistsTC: create.asyncThunk(
       async (_, { dispatch, rejectWithValue }) => {
@@ -133,6 +136,11 @@ export const todolistsSlice = createAppSlice({
   }),
   selectors: {
     selectTodolists: (state) => state,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(clearDataAC, () => {
+      return initialState
+    })
   },
 })
 

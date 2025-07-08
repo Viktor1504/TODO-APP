@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/common/hooks'
+import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { getTheme } from '@/common/theme'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -13,10 +13,12 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import styles from './Login.module.css'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginInputs, loginSchema } from '@/features/auth/lib/schemas'
+import { loginTC } from '@/features/auth/model/authSlice.ts'
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
+  const dispatch = useAppDispatch()
 
   const {
     register,
@@ -30,7 +32,7 @@ export const Login = () => {
   })
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
-    console.log(data)
+    dispatch(loginTC(data))
     reset()
   }
 
