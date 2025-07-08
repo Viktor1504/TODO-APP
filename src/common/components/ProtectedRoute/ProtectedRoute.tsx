@@ -1,11 +1,15 @@
-import { Navigate } from 'react-router'
+import { Navigate, Outlet } from 'react-router'
 import { Path } from '@/common/routing'
-import { ReactNode } from 'react'
+import { PropsWithChildren } from 'react'
 
-export const ProtectedRoute = ({ children, isAllowed }: { children: ReactNode; isAllowed: boolean }) => {
+type Props = PropsWithChildren<{
+  isAllowed: boolean
+}>
+
+export const ProtectedRoute = ({ isAllowed, children }: Props) => {
   if (!isAllowed) {
     return <Navigate to={Path.Login} />
   }
 
-  return children
+  return children ? children : <Outlet />
 }
