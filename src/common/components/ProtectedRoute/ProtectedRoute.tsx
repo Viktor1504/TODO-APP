@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react'
 
 type Props = PropsWithChildren<{
   isAllowed: boolean
-  redirectPath: string
+  redirectPath?: string
 }>
 
 export const ProtectedRoute = ({ isAllowed, children, redirectPath = Path.Login }: Props) => {

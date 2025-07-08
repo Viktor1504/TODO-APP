@@ -5,10 +5,13 @@ import { domainTaskSchema, TasksState, UpdateTaskModel } from '@/features/todoli
 import { RootState } from '@/app/store.ts'
 import { setAppStatus } from '@/app/appSlice.ts'
 import { ResultCode } from '@/common/enums.ts'
+import { clearDataAC } from '@/common/actions'
+
+const initialState: TasksState = {}
 
 export const tasksSlice = createAppSlice({
   name: 'tasks',
-  initialState: {} as TasksState,
+  initialState,
   reducers: (create) => ({
     fetchTasksTC: create.asyncThunk(
       async (todolistId: string, { dispatch, rejectWithValue }) => {
@@ -133,12 +136,16 @@ export const tasksSlice = createAppSlice({
     ),
   }),
   extraReducers: (builder) => {
-    builder.addCase(createTodolistTC.fulfilled, (state, action) => {
-      state[action.payload.todolist.id] = []
-    })
-    builder.addCase(deleteTodolistTC.fulfilled, (state, action) => {
-      delete state[action.payload.id]
-    })
+    builder
+      .addCase(createTodolistTC.fulfilled, (state, action) => {
+        state[action.payload.todolist.id] = []
+      })
+      .addCase(deleteTodolistTC.fulfilled, (state, action) => {
+        delete state[action.payload.id]
+      })
+      .addCase(clearDataAC, () => {
+        return initialState
+      })
   },
   selectors: {
     selectTasks: (state) => state,
