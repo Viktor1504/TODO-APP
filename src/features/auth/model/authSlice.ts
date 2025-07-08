@@ -35,6 +35,53 @@ export const authSlice = createAppSlice({
         },
       },
     ),
+    logoutTC: create.asyncThunk(
+      async (_, { dispatch, rejectWithValue }) => {
+        try {
+          dispatch(setAppStatus({ status: 'loading' }))
+          const res = await authApi.logout()
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatus({ status: 'succeeded' }))
+            localStorage.removeItem(AUTH_TOKEN)
+            return { isLoggedIn: false }
+          } else {
+            handleServerAppError(res.data, dispatch)
+            return rejectWithValue(null)
+          }
+        } catch (error) {
+          handleServerNetworkError(error, dispatch)
+          return rejectWithValue(null)
+        }
+      },
+      {
+        fulfilled: (state, action) => {
+          state.isLoggedIn = action.payload.isLoggedIn
+        },
+      },
+    ),
+    initializeAppTC: create.asyncThunk(
+      async (_, { dispatch, rejectWithValue }) => {
+        try {
+          dispatch(setAppStatus({ status: 'loading' }))
+          const res = await authApi.me()
+          if (res.data.resultCode === ResultCode.Success) {
+            dispatch(setAppStatus({ status: 'succeeded' }))
+            return { isLoggedIn: true }
+          } else {
+            handleServerAppError(res.data, dispatch)
+            return rejectWithValue(null)
+          }
+        } catch (error: any) {
+          handleServerNetworkError(error, dispatch)
+          return rejectWithValue(null)
+        }
+      },
+      {
+        fulfilled: (state, action) => {
+          state.isLoggedIn = action.payload.isLoggedIn
+        },
+      },
+    ),
   }),
   selectors: {
     selectIsLoggedIn: (state) => state.isLoggedIn,
@@ -42,5 +89,5 @@ export const authSlice = createAppSlice({
 })
 
 export const { selectIsLoggedIn } = authSlice.selectors
-export const { loginTC } = authSlice.actions
+export const { loginTC, logoutTC, initializeAppTC } = authSlice.actions
 export const authReducer = authSlice.reducer
