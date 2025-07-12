@@ -9,26 +9,37 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { NavButton } from '@/common/components/NavButton/NavButton.ts'
 import Switch from '@mui/material/Switch'
 import { containerSx } from '@/common/styles'
-import { changeThemeMode, selectStatus, selectThemeMode } from '@/app/appSlice.ts'
+import { changeThemeMode, selectIsLoggedIn, selectStatus, selectThemeMode, setIsLoggedInAC } from '@/app/appSlice.ts'
 import LinearProgress from '@mui/material/LinearProgress'
-import { logoutTC, selectIsLoggedIn } from '@/features/auth/model/authSlice.ts'
 import { Navigate } from 'react-router'
 import { Path } from '@/common/routing'
+import { useLogoutMutation } from '@/features/auth/api/authApi.ts'
+import { ResultCode } from '@/common/enums.ts'
+import { AUTH_TOKEN } from '@/common/constants'
+import { clearDataAC } from '@/common/actions'
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
+  const theme = getTheme(themeMode)
   const status = useAppSelector(selectStatus)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const dispatch = useAppDispatch()
-  const theme = getTheme(themeMode)
+
+  const [logout] = useLogoutMutation()
 
   const changeMode = () => {
     dispatch(changeThemeMode({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
   }
 
   const logoutHandler = () => {
-    dispatch(logoutTC())
+    logout().then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedInAC({ isLoggedIn: false }))
+        localStorage.removeItem(AUTH_TOKEN)
+        dispatch(clearDataAC())
+      }
+    })
   }
 
   if (!isLoggedIn) {

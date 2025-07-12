@@ -8,17 +8,21 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
-import { selectThemeMode } from '@/app/appSlice.ts'
+import { selectThemeMode, setIsLoggedInAC } from '@/app/appSlice.ts'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import styles from './Login.module.css'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginInputs, loginSchema } from '@/features/auth/lib/schemas'
-import { loginTC } from '@/features/auth/model/authSlice.ts'
+import { useLoginMutation } from '@/features/auth/api/authApi.ts'
+import { ResultCode } from '@/common/enums.ts'
+import { AUTH_TOKEN } from '@/common/constants'
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
   const dispatch = useAppDispatch()
+
+  const [login] = useLoginMutation()
 
   const {
     register,
@@ -32,12 +36,17 @@ export const Login = () => {
   })
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
-    dispatch(loginTC(data))
-    reset()
+    login(data).then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedInAC({ isLoggedIn: true }))
+        localStorage.setItem(AUTH_TOKEN, res.data.data.token)
+        reset()
+      }
+    })
   }
 
   return (
-    <Grid container justifyContent={'center'}>
+    <Grid container justifyContent={'center'} alignItems={'center'} height={'100vh'}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl>
           <FormLabel>

@@ -7,7 +7,7 @@ type Props = PropsWithChildren<{
   redirectPath?: string
 }>
 
-export const ProtectedRoute = ({ isAllowed, children, redirectPath = Path.Login }: Props) => {
+export const ProtectedRoute = ({ children, isAllowed, redirectPath = Path.Login }: Props) => {
   if (!isAllowed) {
     return <Navigate to={redirectPath} />
   }

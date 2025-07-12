@@ -1,6 +1,6 @@
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
 import { Todolist, todolistSchema } from '@/features/todolists/api/todolistsApi.types.ts'
-import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
+import { _todolistsApi } from '@/features/todolists/api/_todolistsApi.ts'
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
 import { setAppStatus } from '@/app/appSlice.ts'
 import { RequestStatus } from '@/common/types'
@@ -22,7 +22,7 @@ export const todolistsSlice = createAppSlice({
       async (_, { dispatch, rejectWithValue }) => {
         try {
           dispatch(setAppStatus({ status: 'loading' }))
-          const res = await todolistsApi.getTodolists()
+          const res = await _todolistsApi.getTodolists()
           todolistSchema.array().parse(res.data)
           dispatch(setAppStatus({ status: 'succeeded' }))
           return { todolists: res.data }
@@ -44,7 +44,7 @@ export const todolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatus({ status: 'loading' }))
           dispatch(changeTodolistStatusAC({ id, entityStatus: 'loading' }))
-          const res = await todolistsApi.deleteTodolist(id)
+          const res = await _todolistsApi.deleteTodolist(id)
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatus({ status: 'succeeded' }))
             return { id }
@@ -70,7 +70,7 @@ export const todolistsSlice = createAppSlice({
       async (title: string, { dispatch, rejectWithValue }) => {
         try {
           dispatch(setAppStatus({ status: 'loading' }))
-          const res = await todolistsApi.createTodolist(title)
+          const res = await _todolistsApi.createTodolist(title)
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatus({ status: 'succeeded' }))
             return { todolist: res.data.data.item }
@@ -99,7 +99,7 @@ export const todolistsSlice = createAppSlice({
         const { id, title } = arg
         try {
           dispatch(setAppStatus({ status: 'loading' }))
-          const res = await todolistsApi.changeTodolistTitle({ id, title })
+          const res = await _todolistsApi.changeTodolistTitle({ id, title })
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatus({ status: 'succeeded' }))
             return { id, title }
