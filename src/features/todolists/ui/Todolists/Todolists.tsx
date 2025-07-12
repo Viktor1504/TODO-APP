@@ -1,22 +1,23 @@
-import {useAppSelector} from '@/common/hooks/useAppSelector.ts'
-import {Grid, Paper} from '@mui/material'
-import {TodolistItem} from '@/features/todolists/ui/Todolists/TodolistItem'
-import {useEffect} from 'react'
-import {useAppDispatch} from '@/common/hooks'
-import {fetchTodolistsTC, selectTodolists} from '@/features/todolists/model/todolistsSlice.ts'
+import { Grid, Paper } from '@mui/material'
+import { TodolistItem } from '@/features/todolists/ui/Todolists/TodolistItem'
+import { useGetTodolistsQuery } from '@/features/todolists/api/todolistsApi.ts'
+import { useState } from 'react'
 
 export const Todolists = () => {
-  const todolists = useAppSelector(selectTodolists)
+  const [skip, setSkip] = useState(true)
 
-  const dispatch = useAppDispatch()
+  const { data: todolists } = useGetTodolistsQuery(undefined, { skip })
 
-  useEffect(() => {
-    dispatch(fetchTodolistsTC())
-  }, [])
+  const fetchTodolists = () => {
+    setSkip(false)
+  }
 
   return (
     <>
-      {todolists.map((todolist) => (
+      <div>
+        <button onClick={fetchTodolists}>Download todolists</button>
+      </div>
+      {todolists?.map((todolist) => (
         <Grid key={todolist.id}>
           <Paper elevation={3} sx={{ p: '0 20px 20px 20px' }}>
             <TodolistItem todolist={todolist} />

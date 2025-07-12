@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { AUTH_TOKEN } from '@/common/constants'
+import { Todolist } from '@/features/todolists/api/todolistsApi.types.ts'
+import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 // `createApi` - функция из `RTK Query`, позволяющая создать объект `API`
 // для взаимодействия с внешними `API` и управления состоянием приложения
 export const todolistsApi = createApi({
@@ -21,6 +23,8 @@ export const todolistsApi = createApi({
     // `query` по умолчанию создает запрос `get` и указание метода необязательно
     getTodolists: build.query<any[], void>({
       query: () => 'todo-lists',
+      transformResponse: (todolists: Todolist[]): DomainTodolist[] =>
+        todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' })),
     }),
   }),
 })
