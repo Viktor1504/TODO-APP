@@ -37,7 +37,7 @@ export const Login = () => {
   }
 
   return (
-    <Grid container justifyContent={'center'}>
+    <Grid container justifyContent={'center'} alignItems={'center'} height={'100vh'}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl>
           <FormLabel>
