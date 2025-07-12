@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { AUTH_TOKEN } from '@/common/constants'
-
 // `createApi` - функция из `RTK Query`, позволяющая создать объект `API`
 // для взаимодействия с внешними `API` и управления состоянием приложения
 export const todolistsApi = createApi({
@@ -25,7 +24,6 @@ export const todolistsApi = createApi({
     }),
   }),
 })
-
 // `createApi` создает объект `API`, который содержит все эндпоинты в виде хуков,
 // определенные в свойстве `endpoints`
 export const { useGetTodolistsQuery } = todolistsApi
