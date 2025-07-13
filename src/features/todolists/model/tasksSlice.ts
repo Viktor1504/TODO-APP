@@ -1,6 +1,6 @@
 import { createTodolistTC, deleteTodolistTC } from '@/features/todolists/model/todolistsSlice.ts'
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
-import { tasksApi } from '@/features/todolists/api/tasksApi.ts'
+import { _tasksApi } from '@/features/todolists/api/_tasksApi.ts'
 import { domainTaskSchema, TasksState, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types.ts'
 import { RootState } from '@/app/store.ts'
 import { setAppStatus } from '@/app/appSlice.ts'
@@ -17,7 +17,7 @@ export const tasksSlice = createAppSlice({
       async (todolistId: string, { dispatch, rejectWithValue }) => {
         try {
           dispatch(setAppStatus({ status: 'loading' }))
-          const res = await tasksApi.getTasks(todolistId)
+          const res = await _tasksApi.getTasks(todolistId)
           domainTaskSchema.array().parse(res.data.items)
           dispatch(setAppStatus({ status: 'succeeded' }))
           return { todolistId, tasks: res.data.items }
@@ -37,7 +37,7 @@ export const tasksSlice = createAppSlice({
         const { todolistId, taskId } = payload
         try {
           dispatch(setAppStatus({ status: 'loading' }))
-          const res = await tasksApi.deleteTask(todolistId, taskId)
+          const res = await _tasksApi.deleteTask(todolistId, taskId)
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatus({ status: 'succeeded' }))
             return payload
@@ -84,7 +84,7 @@ export const tasksSlice = createAppSlice({
         }
         try {
           dispatch(setAppStatus({ status: 'loading' }))
-          const res = await tasksApi.updateTask({ todolistId, taskId, model })
+          const res = await _tasksApi.updateTask({ todolistId, taskId, model })
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatus({ status: 'succeeded' }))
             return { task: res.data.data.item }
@@ -113,7 +113,7 @@ export const tasksSlice = createAppSlice({
         const { todolistId, title } = payload
         try {
           dispatch(setAppStatus({ status: 'loading' }))
-          const res = await tasksApi.createTask(todolistId, title)
+          const res = await _tasksApi.createTask(todolistId, title)
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatus({ status: 'succeeded' }))
             return { task: res.data.data.item }

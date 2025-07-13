@@ -16,6 +16,7 @@ import { LoginInputs, loginSchema } from '@/features/auth/lib/schemas'
 import { useLoginMutation } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums.ts'
 import { AUTH_TOKEN } from '@/common/constants'
+import { Typography } from '@mui/material'
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -71,7 +72,7 @@ export const Login = () => {
           </FormLabel>
           <FormGroup>
             <TextField label="Email" margin="normal" error={!!errors.email} {...register('email')} />
-            {errors.email && <span className={styles.errorMessage}>{errors.email.message}</span>}
+            {errors.email && <Typography className={styles.errorMessage}>{errors.email.message}</Typography>}
             <TextField
               type="password"
               label="Password"
@@ -79,7 +80,7 @@ export const Login = () => {
               error={!!errors.password}
               {...register('password')}
             />
-            {errors.password && <span className={styles.errorMessage}>{errors.password.message}</span>}
+            {errors.password && <Typography className={styles.errorMessage}>{errors.password.message}</Typography>}
             <FormControlLabel
               label="Remember me"
               control={
