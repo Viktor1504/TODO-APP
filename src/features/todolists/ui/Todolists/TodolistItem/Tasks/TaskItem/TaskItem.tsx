@@ -17,7 +17,7 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
     removeTask({ todolistId: todolist.id, taskId: task.id })
   }
 
-  const model: UpdateTaskModel = {
+  const baseUpdateModel: UpdateTaskModel = {
     status: task.status,
     title: task.title,
     deadline: task.deadline,
@@ -28,11 +28,11 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
 
   const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => {
     const status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-    updateTask({ todolistId: todolist.id, taskId: task.id, model: { ...model, status } })
+    updateTask({ todolistId: todolist.id, taskId: task.id, model: { ...baseUpdateModel, status } })
   }
 
   const changeTaskTitle = (title: string) => {
-    updateTask({ todolistId: todolist.id, taskId: task.id, model: { ...model, title } })
+    updateTask({ todolistId: todolist.id, taskId: task.id, model: { ...baseUpdateModel, title } })
   }
 
   return (
