@@ -27,7 +27,7 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
       {filteredTaskList?.length > 0 ? (
         <List>
           {filteredTaskList.map((task) => (
-            <TaskItem key={task.id} task={task} todolistId={id} todolist={todolist} />
+            <TaskItem key={task.id} task={task} todolist={todolist} />
           ))}
         </List>
       ) : (

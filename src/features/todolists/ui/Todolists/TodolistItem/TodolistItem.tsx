@@ -1,17 +1,16 @@
-import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
 import { TodolistTitle } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle.tsx'
 import { CreateItemForm } from '@/common/components'
 import { FilterButtons, Tasks } from '@/features/todolists/ui/Todolists/TodolistItem'
 import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
-import { createTaskTC } from '@/features/todolists/model/tasksSlice.ts'
+import { useAddTaskMutation } from '@/features/todolists/api/tasksApi.ts'
 
 export type FilterValues = 'all' | 'active' | 'completed'
 
 export const TodolistItem = ({ todolist }: { todolist: DomainTodolist }) => {
-  const dispatch = useAppDispatch()
+  const [addTask] = useAddTaskMutation()
 
   const createTask = (title: string) => {
-    dispatch(createTaskTC({ todolistId: todolist.id, title }))
+    addTask({ todolistId: todolist.id, title })
   }
 
   return (
