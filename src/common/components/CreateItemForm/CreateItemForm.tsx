@@ -28,7 +28,7 @@ export const CreateItemForm = ({
     }
 
     onCreateItem(trimmedTitle)
-    setTitleValue('') // ✅ Очищаем поле после создания
+    setTitleValue('')
     setError(null)
   }
 
