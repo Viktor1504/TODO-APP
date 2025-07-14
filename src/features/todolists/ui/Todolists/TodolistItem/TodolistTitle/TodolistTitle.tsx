@@ -23,7 +23,7 @@ export const TodolistTitle = ({ todolist }: { todolist: DomainTodolist }) => {
     removeTodolist(id)
       .unwrap()
       .catch(() => {
-        changeTodolistStatus('failed')
+        changeTodolistStatus('idle')
       })
   }
 
