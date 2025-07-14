@@ -1,18 +1,25 @@
-import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
-import { Todolist } from '@/app/App.tsx'
+import { useAppDispatch } from '@/common/hooks'
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
-import { changeTodolistFilterAC } from '@/features/todolists/model/todolistsSlice.ts'
+import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
+import { Stack } from '@mui/material'
+import { containerSx } from '@/common/styles'
 import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
-import { containerSx } from '@/common/styles/container.styles.ts'
+import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
 
-export const FilterButtons = ({ todolist }: { todolist: Todolist }) => {
+export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist
 
   const dispatch = useAppDispatch()
 
   const changeFilter = (filter: FilterValues) => {
-    dispatch(changeTodolistFilterAC({ id, filter }))
+    dispatch(
+      todolistsApi.util.updateQueryData('getTodolists', undefined, (state) => {
+        const todolist = state.find((tl) => tl.id === id)
+        if (todolist) {
+          todolist.filter = filter
+        }
+      }),
+    )
   }
 
   return (
