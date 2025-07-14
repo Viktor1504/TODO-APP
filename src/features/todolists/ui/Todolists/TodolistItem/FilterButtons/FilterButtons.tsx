@@ -5,6 +5,9 @@ import { Stack } from '@mui/material'
 import { containerSx } from '@/common/styles'
 import Button from '@mui/material/Button'
 import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
+import MenuIcon from '@mui/icons-material/Menu'
+import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import DoneIcon from '@mui/icons-material/Done'
 
 export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist
@@ -24,10 +27,16 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
 
   return (
     <Stack direction="row" sx={containerSx}>
-      <Button variant={filter === 'all' ? 'outlined' : 'text'} color="inherit" onClick={() => changeFilter('all')}>
+      <Button
+        startIcon={<MenuIcon />}
+        variant={filter === 'all' ? 'outlined' : 'text'}
+        color="inherit"
+        onClick={() => changeFilter('all')}
+      >
         All
       </Button>
       <Button
+        startIcon={<PlayArrowIcon />}
         variant={filter === 'active' ? 'outlined' : 'text'}
         color="primary"
         onClick={() => changeFilter('active')}
@@ -35,6 +44,7 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
         Active
       </Button>
       <Button
+        startIcon={<DoneIcon />}
         variant={filter === 'completed' ? 'outlined' : 'text'}
         color="secondary"
         onClick={() => changeFilter('completed')}
