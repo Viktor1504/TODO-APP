@@ -2,6 +2,7 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import IconButton from '@mui/material/IconButton'
+import { Box } from '@mui/material'
 
 export const CreateItemForm = ({
   onCreateItem,
@@ -14,7 +15,7 @@ export const CreateItemForm = ({
   const [titleValue, setTitleValue] = useState<string>('')
 
   const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setError(null)
+    if (error) setError(null)
     setTitleValue(e.currentTarget.value)
   }
 
@@ -39,7 +40,7 @@ export const CreateItemForm = ({
   }
 
   return (
-    <div>
+    <Box display="flex" alignItems="center" gap={1}>
       <TextField
         label={'Enter a title'}
         variant="outlined"
@@ -47,6 +48,7 @@ export const CreateItemForm = ({
         size={'small'}
         error={!!error}
         helperText={error}
+        fullWidth
         onChange={changeTaskTitleHandler}
         onKeyDown={onKeyDownHandler}
         disabled={disabled}
@@ -54,6 +56,6 @@ export const CreateItemForm = ({
       <IconButton color="primary" onClick={createItemHandler} disabled={disabled}>
         <AddBoxIcon />
       </IconButton>
-    </div>
+    </Box>
   )
 }

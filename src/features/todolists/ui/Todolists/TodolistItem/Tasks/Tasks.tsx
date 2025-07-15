@@ -4,11 +4,12 @@ import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem'
 import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 import { TaskStatus } from '@/common/enums.ts'
 import { useGetTasksQuery } from '@/features/todolists/api/tasksApi.ts'
+import { TasksSkeleton } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksSkeleton/TasksSkeleton.tsx'
 
 export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist
 
-  const { data: tasks } = useGetTasksQuery(id)
+  const { data: tasks, isLoading } = useGetTasksQuery(id)
 
   const filteredTaskList = useMemo(() => {
     const items = tasks?.items ?? []
@@ -21,6 +22,10 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
         return items
     }
   }, [tasks?.items, filter])
+
+  if (isLoading) {
+    return <TasksSkeleton />
+  }
 
   return (
     <>
