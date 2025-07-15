@@ -9,7 +9,7 @@ export const Todolists = () => {
 
   if (isLoading) {
     return (
-      <Box sx={containerSx} style={{ gap: '32px' }}>
+      <Box sx={containerSx} gap="30px">
         {Array(3)
           .fill(null)
           .map((_, id) => (
