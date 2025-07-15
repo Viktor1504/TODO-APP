@@ -16,17 +16,19 @@ export const TodolistSkeleton = () => (
       <Skeleton width={20} height={40} />
     </Box>
     {/*!* Tasks List *!*/}
-    {Array(4)
-      .fill(null)
-      .map((_, id) => (
-        <Box key={id} sx={containerSx}>
-          <Box display="flex" alignItems="center" gap="15px">
+    <Box style={{ padding: '8px 0' }}>
+      {Array(4)
+        .fill(null)
+        .map((_, id) => (
+          <Box key={id} sx={containerSx}>
+            <Box sx={containerSx} style={{ gap: '15px' }}>
+              <Skeleton width={20} height={40} />
+              <Skeleton width={150} height={40} />
+            </Box>
             <Skeleton width={20} height={40} />
-            <Skeleton width={150} height={40} />
           </Box>
-          <Skeleton width={20} height={40} />
-        </Box>
-      ))}
+        ))}
+    </Box>
     {/*!* Filter or Action Buttons *!*/}
     <Box sx={containerSx}>
       {Array(3)
