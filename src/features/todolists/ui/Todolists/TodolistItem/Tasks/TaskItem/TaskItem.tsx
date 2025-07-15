@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { Checkbox, ListItem } from '@mui/material'
+import { Box, Checkbox, ListItem } from '@mui/material'
 import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -37,14 +37,14 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
 
   return (
     <ListItem sx={getListItemSx(task.status)}>
-      <div>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Checkbox
           checked={task.status === TaskStatus.Completed}
           onChange={changeTaskStatus}
           disabled={todolist.entityStatus === 'loading'}
         />
         <EditableSpan value={task.title} onChange={changeTaskTitle} disabled={todolist.entityStatus === 'loading'} />
-      </div>
+      </Box>
       <IconButton onClick={deleteTask} disabled={todolist.entityStatus === 'loading'}>
         <DeleteIcon />
       </IconButton>

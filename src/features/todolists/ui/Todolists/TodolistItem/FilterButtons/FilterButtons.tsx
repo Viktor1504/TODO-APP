@@ -2,7 +2,6 @@ import { useAppDispatch } from '@/common/hooks'
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
 import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 import { Stack } from '@mui/material'
-import { containerSx } from '@/common/styles'
 import Button from '@mui/material/Button'
 import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -26,12 +25,13 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
   }
 
   return (
-    <Stack direction="row" sx={containerSx}>
+    <Stack direction="row">
       <Button
         startIcon={<MenuIcon />}
         variant={filter === 'all' ? 'outlined' : 'text'}
         color="inherit"
         onClick={() => changeFilter('all')}
+        sx={{ minWidth: '100px' }}
       >
         All
       </Button>
@@ -40,6 +40,7 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
         variant={filter === 'active' ? 'outlined' : 'text'}
         color="primary"
         onClick={() => changeFilter('active')}
+        sx={{ minWidth: '100px' }}
       >
         Active
       </Button>
@@ -48,6 +49,7 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
         variant={filter === 'completed' ? 'outlined' : 'text'}
         color="secondary"
         onClick={() => changeFilter('completed')}
+        sx={{ minWidth: '100px' }}
       >
         Completed
       </Button>

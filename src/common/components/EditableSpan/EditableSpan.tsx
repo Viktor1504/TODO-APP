@@ -48,9 +48,7 @@ export const EditableSpan = ({
           autoFocus
         />
       ) : (
-        <Typography sx={{ display: 'inline-block' }} onDoubleClick={enableEditMode}>
-          {value}
-        </Typography>
+        <Typography onDoubleClick={enableEditMode}>{value}</Typography>
       )}
     </>
   )
