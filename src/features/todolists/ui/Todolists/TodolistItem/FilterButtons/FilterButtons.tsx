@@ -36,7 +36,7 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
       <Button
         startIcon={<PlayArrowIcon />}
         variant={filter === 'active' ? 'contained' : 'outlined'}
-        color="primary"
+        color="secondary"
         onClick={() => changeFilter('active')}
       >
         Active
