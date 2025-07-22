@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { appReducer, appSlice } from '@/app/appSlice.ts'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { baseApi } from '@/features/todolists/api/baseApi.ts'
+import { errorMiddleware } from '@/common/utils'
 
 // создание store
 export const store = configureStore({
@@ -9,7 +10,7 @@ export const store = configureStore({
     [appSlice.name]: appReducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware, errorMiddleware),
 })
 
 setupListeners(store.dispatch)
