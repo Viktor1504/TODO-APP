@@ -1,12 +1,11 @@
 import { useAppDispatch } from '@/common/hooks'
-import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
-import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 import { ButtonGroup } from '@mui/material'
 import Button from '@mui/material/Button'
 import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
 import MenuIcon from '@mui/icons-material/Menu'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import DoneIcon from '@mui/icons-material/Done'
+import { DomainTodolist, FilterValues } from '@/features/todolists/lib/types'
 
 export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist

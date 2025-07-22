@@ -1,4 +1,4 @@
-import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
+import { DomainTodolist } from '@/features/todolists/model/_todolistsSlice.ts'
 import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
