@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/common/hooks'
 import { FilterValues } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.tsx'
 import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
-import { Stack } from '@mui/material'
+import { ButtonGroup } from '@mui/material'
 import Button from '@mui/material/Button'
 import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -13,46 +13,42 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
 
   const dispatch = useAppDispatch()
 
-  const changeFilter = (filter: FilterValues) => {
+  const changeFilter = (newFilter: FilterValues) => {
     dispatch(
       todolistsApi.util.updateQueryData('getTodolists', undefined, (state) => {
         const todolist = state.find((tl) => tl.id === id)
         if (todolist) {
-          todolist.filter = filter
+          todolist.filter = newFilter
         }
       }),
     )
   }
 
   return (
-    <Stack direction="row">
+    <ButtonGroup variant="outlined" size="small" sx={{ display: 'flex', justifyContent: 'center' }}>
       <Button
         startIcon={<MenuIcon />}
-        variant={filter === 'all' ? 'outlined' : 'text'}
-        color="inherit"
+        variant={filter === 'all' ? 'contained' : 'outlined'}
         onClick={() => changeFilter('all')}
-        sx={{ minWidth: '100px' }}
       >
         All
       </Button>
       <Button
         startIcon={<PlayArrowIcon />}
-        variant={filter === 'active' ? 'outlined' : 'text'}
+        variant={filter === 'active' ? 'contained' : 'outlined'}
         color="primary"
         onClick={() => changeFilter('active')}
-        sx={{ minWidth: '100px' }}
       >
         Active
       </Button>
       <Button
         startIcon={<DoneIcon />}
-        variant={filter === 'completed' ? 'outlined' : 'text'}
-        color="secondary"
+        variant={filter === 'completed' ? 'contained' : 'outlined'}
+        color="success"
         onClick={() => changeFilter('completed')}
-        sx={{ minWidth: '100px' }}
       >
         Completed
       </Button>
-    </Stack>
+    </ButtonGroup>
   )
 }
