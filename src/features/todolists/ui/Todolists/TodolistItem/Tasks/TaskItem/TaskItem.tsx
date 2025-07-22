@@ -43,7 +43,11 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
           onChange={changeTaskStatus}
           disabled={todolist.entityStatus === 'loading'}
         />
-        <EditableSpan value={task.title} onChange={changeTaskTitle} disabled={todolist.entityStatus === 'loading'} />
+        <EditableSpan
+          value={task.title}
+          onValueChange={changeTaskTitle}
+          disabled={todolist.entityStatus === 'loading'}
+        />
       </Box>
       <IconButton onClick={deleteTask} disabled={todolist.entityStatus === 'loading'}>
         <DeleteIcon />

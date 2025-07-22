@@ -44,7 +44,12 @@ export const TodolistTitle = ({ todolist }: { todolist: DomainTodolist }) => {
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
-      <EditableSpan value={title} onChange={changeTodolistTitle} disabled={entityStatus === 'loading'} />
+      <EditableSpan
+        sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: '20px' }}
+        value={title}
+        onValueChange={changeTodolistTitle}
+        disabled={entityStatus === 'loading'}
+      />
 
       <IconButton onClick={deleteTodolist} disabled={entityStatus === 'loading'}>
         <DeleteIcon />
