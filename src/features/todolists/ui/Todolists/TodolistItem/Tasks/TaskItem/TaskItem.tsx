@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { getListItemSx } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.styles.ts'
 import { DomainTask, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types.ts'
 import { TaskStatus } from '@/common/enums.ts'
-import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
+import { DomainTodolist } from '@/features/todolists/model/_todolistsSlice.ts'
 import { useRemoveTaskMutation, useUpdateTaskMutation } from '@/features/todolists/api/tasksApi.ts'
 
 export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: DomainTodolist }) => {
@@ -43,7 +43,11 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
           onChange={changeTaskStatus}
           disabled={todolist.entityStatus === 'loading'}
         />
-        <EditableSpan value={task.title} onChange={changeTaskTitle} disabled={todolist.entityStatus === 'loading'} />
+        <EditableSpan
+          value={task.title}
+          onValueChange={changeTaskTitle}
+          disabled={todolist.entityStatus === 'loading'}
+        />
       </Box>
       <IconButton onClick={deleteTask} disabled={todolist.entityStatus === 'loading'}>
         <DeleteIcon />

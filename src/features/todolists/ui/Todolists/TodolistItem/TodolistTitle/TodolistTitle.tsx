@@ -1,4 +1,4 @@
-import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
+import { DomainTodolist } from '@/features/todolists/model/_todolistsSlice.ts'
 import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -44,7 +44,12 @@ export const TodolistTitle = ({ todolist }: { todolist: DomainTodolist }) => {
 
   return (
     <Box display="flex" alignItems="center" justifyContent="space-between">
-      <EditableSpan value={title} onChange={changeTodolistTitle} disabled={entityStatus === 'loading'} />
+      <EditableSpan
+        sx={{ color: 'primary.main', fontWeight: 'bold', fontSize: '20px' }}
+        value={title}
+        onValueChange={changeTodolistTitle}
+        disabled={entityStatus === 'loading'}
+      />
 
       <IconButton onClick={deleteTodolist} disabled={entityStatus === 'loading'}>
         <DeleteIcon />

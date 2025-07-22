@@ -1,11 +1,9 @@
 import { TodolistTitle } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle.tsx'
 import { CreateItemForm } from '@/common/components'
 import { FilterButtons, Tasks } from '@/features/todolists/ui/Todolists/TodolistItem'
-import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 import { useAddTaskMutation } from '@/features/todolists/api/tasksApi.ts'
 import { Box, Divider } from '@mui/material'
-
-export type FilterValues = 'all' | 'active' | 'completed'
+import { DomainTodolist } from '@/features/todolists/lib/types'
 
 export const TodolistItem = ({ todolist }: { todolist: DomainTodolist }) => {
   const [addTask] = useAddTaskMutation()

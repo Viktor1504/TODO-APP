@@ -1,3 +1,2 @@
-export {createAppSlice} from './createAppSlice.ts'
-export {handleServerNetworkError} from './handleServerNetworkError.ts'
-export {handleServerAppError} from './handleServerAppError.ts'
+export { createAppSlice } from './createAppSlice.ts'
+export { errorMiddleware } from './errorMiddleware.ts'

@@ -72,7 +72,11 @@ export const Login = () => {
           </FormLabel>
           <FormGroup>
             <TextField label="Email" margin="normal" error={!!errors.email} {...register('email')} />
-            {errors.email && <Typography className={styles.errorMessage}>{errors.email.message}</Typography>}
+            {errors.email && (
+              <Typography variant={'body2'} className={styles.errorMessage}>
+                {errors.email.message}
+              </Typography>
+            )}
             <TextField
               type="password"
               label="Password"
@@ -80,7 +84,11 @@ export const Login = () => {
               error={!!errors.password}
               {...register('password')}
             />
-            {errors.password && <Typography className={styles.errorMessage}>{errors.password.message}</Typography>}
+            {errors.password && (
+              <Typography variant={'body2'} className={styles.errorMessage}>
+                {errors.password.message}
+              </Typography>
+            )}
             <FormControlLabel
               label="Remember me"
               control={

@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
 import { List } from '@mui/material'
 import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem'
-import { DomainTodolist } from '@/features/todolists/model/todolistsSlice.ts'
 import { TaskStatus } from '@/common/enums.ts'
 import { useGetTasksQuery } from '@/features/todolists/api/tasksApi.ts'
 import { TasksSkeleton } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksSkeleton/TasksSkeleton.tsx'
+import { DomainTodolist } from '@/features/todolists/lib/types'
 
 export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist
