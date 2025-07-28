@@ -1,11 +1,17 @@
-import { isRejectedWithValue, Middleware, MiddlewareAPI } from '@reduxjs/toolkit'
+import { isFulfilled, isRejectedWithValue, Middleware, MiddlewareAPI } from '@reduxjs/toolkit'
 import { setAppErrorAC } from '@/app/appSlice.ts'
+import { ResultCode } from '@/common/enums.ts'
 
 export const errorMiddleware: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
+  let errorMessage = 'An unknown error occurred'
+  if (isFulfilled(action)) {
+    if ((action.payload as { resultCode: ResultCode }).resultCode === ResultCode.Error) {
+      const messages = (action.payload as { messages: string[] }).messages
+      errorMessage = messages.length ? messages[0] : errorMessage
+      api.dispatch(setAppErrorAC({ error: errorMessage }))
+    }
+  }
   if (isRejectedWithValue(action)) {
-    let errorMessage = 'An unknown error occurred' // Всегда string по умолчанию
-
-    // 1. Проверяем payload (когда используется rejectedWithValue)
     if (action.payload) {
       if (typeof action.payload === 'string') {
         errorMessage = action.payload
@@ -21,13 +27,10 @@ export const errorMiddleware: Middleware = (api: MiddlewareAPI) => (next) => (ac
           errorMessage = action.payload.error
         }
       }
-    }
-    // 2. Проверяем error (когда не используется rejectedWithValue)
-    else if (action.error && 'message' in action.error && typeof action.error.message === 'string') {
+    } else if (action.error && 'message' in action.error && typeof action.error.message === 'string') {
       errorMessage = action.error.message
     }
 
-    // Теперь errorMessage гарантированно string
     api.dispatch(setAppErrorAC({ error: errorMessage }))
 
     console.error('API Error:', errorMessage)

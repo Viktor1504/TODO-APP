@@ -17,9 +17,6 @@ export const appSlice = createSlice({
     changeThemeMode: create.reducer<{ themeMode: ThemeMode }>((state, action) => {
       state.themeMode = action.payload.themeMode
     }),
-    setAppStatus: create.reducer<{ status: RequestStatus }>((state, action) => {
-      state.status = action.payload.status
-    }),
     setAppErrorAC: create.reducer<{ error: string | null }>((state, action) => {
       state.error = action.payload.error
     }),
@@ -53,6 +50,6 @@ export const appSlice = createSlice({
   },
 })
 
-export const { changeThemeMode, setAppStatus, setAppErrorAC, setIsLoggedInAC } = appSlice.actions
+export const { changeThemeMode, setAppErrorAC, setIsLoggedInAC } = appSlice.actions
 export const appReducer = appSlice.reducer
 export const { selectThemeMode, selectStatus, selectAppError, selectIsLoggedIn } = appSlice.selectors
