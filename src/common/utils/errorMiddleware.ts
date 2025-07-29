@@ -1,39 +1,48 @@
-import { isFulfilled, isRejectedWithValue, Middleware, MiddlewareAPI } from '@reduxjs/toolkit'
+import { isFulfilled, isRejectedWithValue, Middleware, MiddlewareAPI, SerializedError } from '@reduxjs/toolkit'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { setAppErrorAC } from '@/app/appSlice.ts'
 import { ResultCode } from '@/common/enums.ts'
 
+// Type guards для безопасной проверки типов
+const isFetchBaseQueryError = (error: unknown): error is FetchBaseQueryError => {
+  return typeof error === 'object' && error != null && 'status' in error
+}
+
+const isSerializedError = (error: unknown): error is SerializedError => {
+  return typeof error === 'object' && error != null && 'message' in error
+}
+
+const getErrorMessage = (error: unknown): string => {
+  if (isFetchBaseQueryError(error)) {
+    if (error.data && typeof error.data === 'object') {
+      const data = error.data as { message?: string }
+      return data.message || `Request failed with status ${error.status}`
+    }
+    return `Request failed with status ${error.status}`
+  }
+
+  if (isSerializedError(error)) {
+    return error.message || 'An unknown error occurred'
+  }
+
+  return 'An unknown error occurred'
+}
+
 export const errorMiddleware: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
-  let errorMessage = 'An unknown error occurred'
   if (isFulfilled(action)) {
-    if ((action.payload as { resultCode: ResultCode }).resultCode === ResultCode.Error) {
-      const messages = (action.payload as { messages: string[] }).messages
-      errorMessage = messages.length ? messages[0] : errorMessage
+    const payload = action.payload as { resultCode?: ResultCode; messages?: string[] }
+
+    if (payload?.resultCode === ResultCode.Error) {
+      const errorMessage = payload.messages?.[0] || 'Operation failed'
       api.dispatch(setAppErrorAC({ error: errorMessage }))
     }
   }
+
   if (isRejectedWithValue(action)) {
-    if (action.payload) {
-      if (typeof action.payload === 'string') {
-        errorMessage = action.payload
-      } else if (typeof action.payload === 'object' && action.payload !== null) {
-        // Для стандартной структуры ошибок RTK Query
-        if ('data' in action.payload && typeof action.payload.data === 'object' && action.payload.data !== null) {
-          errorMessage = (action.payload.data as { message?: string }).message || errorMessage
-        }
-        // Для других возможных структур
-        else if ('message' in action.payload && typeof action.payload.message === 'string') {
-          errorMessage = action.payload.message
-        } else if ('error' in action.payload && typeof action.payload.error === 'string') {
-          errorMessage = action.payload.error
-        }
-      }
-    } else if (action.error && 'message' in action.error && typeof action.error.message === 'string') {
-      errorMessage = action.error.message
-    }
+    const errorMessage = getErrorMessage(action.payload)
 
     api.dispatch(setAppErrorAC({ error: errorMessage }))
-
-    console.error('API Error:', errorMessage)
+    console.error('RTK Query Error:', errorMessage, action.payload)
   }
 
   return next(action)
