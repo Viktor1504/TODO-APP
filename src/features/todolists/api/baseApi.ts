@@ -4,6 +4,9 @@ import { AUTH_TOKEN } from '@/common/constants'
 export const baseApi = createApi({
   reducerPath: 'todolistsApi',
   tagTypes: ['Todolist', 'Task'],
+  keepUnusedDataFor: 5,
+  refetchOnFocus: true,
+  refetchOnReconnect: true,
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BASE_URL,
     prepareHeaders: (headers) => {
