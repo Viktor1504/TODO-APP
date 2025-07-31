@@ -1,12 +1,16 @@
 import { baseApi } from '@/features/todolists/api/baseApi.ts'
 import { DomainTask, GetTasksResponse, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types.ts'
 import { BaseResponse } from '@/common/types'
+import { PAGE_SIZE } from '@/common/constants'
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getTasks: build.query<GetTasksResponse, string>({
-      query: (id) => `todo-lists/${id}/tasks`,
-      providesTags: (_result, _error, todolistId) => [{ type: 'Task', id: todolistId }],
+    getTasks: build.query<GetTasksResponse, { todolistId: string; params: { page: number } }>({
+      query: ({ todolistId, params }) => ({
+        url: `todo-lists/${todolistId}/tasks`,
+        params: { ...params, count: PAGE_SIZE },
+      }),
+      providesTags: (_result, _error, { todolistId }) => [{ type: 'Task', id: todolistId }],
     }),
     removeTask: build.mutation<BaseResponse, { todolistId: string; taskId: string }>({
       query: ({ todolistId, taskId }) => ({
