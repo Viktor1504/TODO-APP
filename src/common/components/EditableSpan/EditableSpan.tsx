@@ -5,7 +5,7 @@ import { Typography, TypographyProps } from '@mui/material'
 type EditableSpanProps = {
   value: string
   onValueChange: (title: string) => void
-  disabled: boolean
+  disabled?: boolean
 } & TypographyProps
 
 export const EditableSpan = ({ value, onValueChange, disabled, ...typographyProps }: EditableSpanProps) => {

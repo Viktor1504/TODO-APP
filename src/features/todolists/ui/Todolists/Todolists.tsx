@@ -5,10 +5,7 @@ import { containerSx } from '@/common/styles'
 import { TodolistSkeleton } from '@/features/todolists/ui/Todolists/TodolistSkeleton/TodolistSkeleton.tsx'
 
 export const Todolists = () => {
-  const { data: todolists, isLoading } = useGetTodolistsQuery(undefined, {
-    pollingInterval: 3000,
-    skipPollingIfUnfocused: true,
-  })
+  const { data: todolists, isLoading } = useGetTodolistsQuery()
 
   if (isLoading) {
     return (
