@@ -6,8 +6,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { getListItemSx } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.styles.ts'
 import { DomainTask, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types.ts'
 import { TaskStatus } from '@/common/enums.ts'
-import { DomainTodolist } from '@/features/todolists/model/_todolistsSlice.ts'
 import { useRemoveTaskMutation, useUpdateTaskMutation } from '@/features/todolists/api/tasksApi.ts'
+import { DomainTodolist } from '@/features/todolists/lib/types'
 
 export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: DomainTodolist }) => {
   const [removeTask] = useRemoveTaskMutation()
@@ -38,18 +38,10 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
   return (
     <ListItem sx={getListItemSx(task.status)}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Checkbox
-          checked={task.status === TaskStatus.Completed}
-          onChange={changeTaskStatus}
-          disabled={todolist.entityStatus === 'loading'}
-        />
-        <EditableSpan
-          value={task.title}
-          onValueChange={changeTaskTitle}
-          disabled={todolist.entityStatus === 'loading'}
-        />
+        <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatus} />
+        <EditableSpan value={task.title} onValueChange={changeTaskTitle} />
       </Box>
-      <IconButton onClick={deleteTask} disabled={todolist.entityStatus === 'loading'}>
+      <IconButton onClick={deleteTask}>
         <DeleteIcon />
       </IconButton>
     </ListItem>

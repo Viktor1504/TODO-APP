@@ -7,8 +7,7 @@ export const todolistsApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getTodolists: build.query<DomainTodolist[], void>({
       query: () => 'todo-lists',
-      transformResponse: (todolists: Todolist[]): DomainTodolist[] =>
-        todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' })),
+      transformResponse: (todolists: Todolist[]): DomainTodolist[] => todolists.map((tl) => ({ ...tl, filter: 'all' })),
       providesTags: ['Todolist'],
     }),
     addTodolist: build.mutation<BaseResponse<{ item: Todolist }>, string>({
