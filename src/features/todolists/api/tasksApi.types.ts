@@ -22,5 +22,3 @@ export type GetTasksResponse = {
   totalCount: number
   items: DomainTask[]
 }
-
-export type TasksState = Record<string, DomainTask[]>

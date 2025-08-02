@@ -1,14 +1,12 @@
-import { useAppDispatch, useAppSelector } from '@/common/hooks'
-import { getTheme } from '@/common/theme'
+import { useAppDispatch } from '@/common/hooks'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
-import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Grid from '@mui/material/Grid'
-import { selectThemeMode, setIsLoggedInAC } from '@/app/appSlice.ts'
+import { setIsLoggedInAC } from '@/app/appSlice.ts'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import styles from './Login.module.css'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,11 +14,12 @@ import { LoginInputs, loginSchema } from '@/features/auth/lib/schemas'
 import { useLoginMutation } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums.ts'
 import { AUTH_TOKEN } from '@/common/constants'
-import { Typography } from '@mui/material'
+import { FormLabel, Typography } from '@mui/material'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { useState } from 'react'
 
 export const Login = () => {
-  const themeMode = useAppSelector(selectThemeMode)
-  const theme = getTheme(themeMode)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const dispatch = useAppDispatch()
 
   const [login] = useLoginMutation()
@@ -42,33 +41,22 @@ export const Login = () => {
         dispatch(setIsLoggedInAC({ isLoggedIn: true }))
         localStorage.setItem(AUTH_TOKEN, res.data.data.token)
         reset()
+        // Сбрасываем капчу после успешной авторизации
+        setCaptchaToken(null)
       }
     })
+  }
+
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token)
   }
 
   return (
     <Grid container justifyContent={'center'} alignItems={'center'} height={'100vh'}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl>
-          <FormLabel>
-            <p>
-              To login get registered
-              <a
-                style={{ color: theme.palette.primary.main, marginLeft: '5px' }}
-                href="https://social-network.samuraijs.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                here
-              </a>
-            </p>
-            <p>or use common test account credentials:</p>
-            <p>
-              <b>Email:</b> free@samuraijs.com
-            </p>
-            <p>
-              <b>Password:</b> free
-            </p>
+          <FormLabel sx={{ display: 'flex', justifyContent: 'center' }}>
+            <h2>Вход в систему</h2>
           </FormLabel>
           <FormGroup>
             <TextField label="Email" margin="normal" error={!!errors.email} {...register('email')} />
@@ -77,6 +65,7 @@ export const Login = () => {
                 {errors.email.message}
               </Typography>
             )}
+
             <TextField
               type="password"
               label="Password"
@@ -89,6 +78,7 @@ export const Login = () => {
                 {errors.password.message}
               </Typography>
             )}
+
             <FormControlLabel
               label="Remember me"
               control={
@@ -101,7 +91,15 @@ export const Login = () => {
                 />
               }
             />
-            <Button type="submit" variant="contained" color="primary">
+
+            <ReCAPTCHA sitekey="6LenmZgrAAAAAGsrhmmJ4dddzvGAWTgGv2v4BYek" onChange={handleCaptchaChange} />
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={!captchaToken} // Отключаем кнопку, если капча не пройдена
+            >
               Login
             </Button>
           </FormGroup>

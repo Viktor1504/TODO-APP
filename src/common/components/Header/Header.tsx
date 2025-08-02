@@ -59,7 +59,7 @@ export const Header = () => {
           <div>
             {isLoggedIn && <NavButton onClick={logoutHandler}>Sign out</NavButton>}
             <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
-            <Switch color={'default'} onChange={changeMode} />
+            <Switch color={'info'} onChange={changeMode} />
           </div>
         </Container>
       </Toolbar>

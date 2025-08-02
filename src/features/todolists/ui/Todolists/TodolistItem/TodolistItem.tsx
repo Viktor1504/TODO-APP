@@ -15,7 +15,7 @@ export const TodolistItem = ({ todolist }: { todolist: DomainTodolist }) => {
   return (
     <Box>
       <TodolistTitle todolist={todolist} />
-      <CreateItemForm onCreateItem={createTask} disabled={todolist.entityStatus === 'loading'} />
+      <CreateItemForm onCreateItem={createTask} labelText={'Enter title task'} />
       <Tasks todolist={todolist} />
       <Divider sx={{ marginY: 1 }} />
       <FilterButtons todolist={todolist} />

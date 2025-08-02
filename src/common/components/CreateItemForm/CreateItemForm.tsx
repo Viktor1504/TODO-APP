@@ -7,9 +7,11 @@ import { Box } from '@mui/material'
 export const CreateItemForm = ({
   onCreateItem,
   disabled,
+  labelText,
 }: {
   onCreateItem: (title: string) => void
   disabled?: boolean
+  labelText: string
 }) => {
   const [error, setError] = useState<string | null>(null)
   const [titleValue, setTitleValue] = useState<string>('')
@@ -42,7 +44,7 @@ export const CreateItemForm = ({
   return (
     <Box display="flex" alignItems="center" gap={1}>
       <TextField
-        label={'Enter a title'}
+        label={labelText}
         variant="outlined"
         value={titleValue}
         size={'small'}

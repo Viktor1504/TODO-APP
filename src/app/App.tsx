@@ -1,4 +1,3 @@
-import './App.css'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
@@ -39,7 +38,7 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={'app'}>
+      <div className={styles.app}>
         <CssBaseline />
         <Header />
         <Routing />
