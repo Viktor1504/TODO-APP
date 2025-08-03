@@ -8,9 +8,9 @@ import { selectIsLoggedIn } from '@/app/appSlice.ts'
 
 export const Path = {
   Main: '/',
-  Login: '/login',
-  Faq: '/faq',
-  NotFound: '/*',
+  Login: 'login',
+  Faq: 'faq',
+  NotFound: '*',
 } as const
 
 export const Routing = () => {
