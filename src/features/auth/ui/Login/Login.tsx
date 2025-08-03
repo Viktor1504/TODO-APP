@@ -15,7 +15,6 @@ import { useLoginMutation } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums.ts'
 import { AUTH_TOKEN } from '@/common/constants'
 import { FormLabel, Typography } from '@mui/material'
-import ReCAPTCHA from 'react-google-recaptcha'
 import { useState } from 'react'
 
 export const Login = () => {
@@ -47,9 +46,9 @@ export const Login = () => {
     })
   }
 
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token)
-  }
+  // const handleCaptchaChange = (token: string | null) => {
+  //   setCaptchaToken(token)
+  // }
 
   return (
     <Grid container justifyContent={'center'} alignItems={'center'} height={'100vh'}>
@@ -92,7 +91,7 @@ export const Login = () => {
               }
             />
 
-            <ReCAPTCHA sitekey="6LenmZgrAAAAAGsrhmmJ4dddzvGAWTgGv2v4BYek" onChange={handleCaptchaChange} />
+            {/*<ReCAPTCHA sitekey="6LenmZgrAAAAAGsrhmmJ4dddzvGAWTgGv2v4BYek" onChange={handleCaptchaChange} />*/}
 
             <Button
               type="submit"

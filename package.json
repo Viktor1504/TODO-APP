@@ -1,5 +1,6 @@
 {
   "name": "todolist-01",
+  "homepage": "https://Viktor1504.github.io/TODO-APP",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,9 @@
     "dev": "vite --port 3000",
     "build": "tsc -b && vite build",
     "test": "vitest",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "pnpm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -17,6 +20,7 @@
     "@mui/material": "^7.1.2",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.10.0",
+    "gh-pages": "^6.3.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-google-recaptcha": "^3.1.0",
