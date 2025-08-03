@@ -15,9 +15,11 @@ import { useLoginMutation } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums.ts'
 import { AUTH_TOKEN } from '@/common/constants'
 import { FormLabel, Typography } from '@mui/material'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { useState } from 'react'
 
 export const Login = () => {
-  // const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const dispatch = useAppDispatch()
 
   const [login] = useLoginMutation()
@@ -39,15 +41,14 @@ export const Login = () => {
         dispatch(setIsLoggedInAC({ isLoggedIn: true }))
         localStorage.setItem(AUTH_TOKEN, res.data.data.token)
         reset()
-        // Сбрасываем капчу после успешной авторизации
-        // setCaptchaToken(null)
+        setCaptchaToken(null)
       }
     })
   }
 
-  // const handleCaptchaChange = (token: string | null) => {
-  //   setCaptchaToken(token)
-  // }
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token)
+  }
 
   return (
     <Grid container justifyContent={'center'} alignItems={'center'} height={'100vh'}>
@@ -90,14 +91,9 @@ export const Login = () => {
               }
             />
 
-            {/*<ReCAPTCHA sitekey="6LenmZgrAAAAAGsrhmmJ4dddzvGAWTgGv2v4BYek" onChange={handleCaptchaChange} />*/}
+            <ReCAPTCHA sitekey="6LenmZgrAAAAAGsrhmmJ4dddzvGAWTgGv2v4BYek" onChange={handleCaptchaChange} />
 
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              // disabled={!captchaToken} // Отключаем кнопку, если капча не пройдена
-            >
+            <Button type="submit" variant="contained" color="primary" disabled={!captchaToken}>
               Login
             </Button>
           </FormGroup>
