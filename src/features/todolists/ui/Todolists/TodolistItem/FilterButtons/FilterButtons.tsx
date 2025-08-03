@@ -1,10 +1,7 @@
 import { useAppDispatch } from '@/common/hooks'
-import { ButtonGroup } from '@mui/material'
+import { Stack } from '@mui/material'
 import Button from '@mui/material/Button'
 import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
-import MenuIcon from '@mui/icons-material/Menu'
-import PlayArrowIcon from '@mui/icons-material/PlayArrow'
-import DoneIcon from '@mui/icons-material/Done'
 import { DomainTodolist, FilterValues } from '@/features/todolists/lib/types'
 
 export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
@@ -24,16 +21,11 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
   }
 
   return (
-    <ButtonGroup variant="outlined" size="small" sx={{ display: 'flex', justifyContent: 'center' }}>
-      <Button
-        startIcon={<MenuIcon />}
-        variant={filter === 'all' ? 'contained' : 'outlined'}
-        onClick={() => changeFilter('all')}
-      >
+    <Stack direction="row" spacing={2} justifyContent={'center'}>
+      <Button variant={filter === 'all' ? 'contained' : 'outlined'} onClick={() => changeFilter('all')}>
         All
       </Button>
       <Button
-        startIcon={<PlayArrowIcon />}
         variant={filter === 'active' ? 'contained' : 'outlined'}
         color="secondary"
         onClick={() => changeFilter('active')}
@@ -41,13 +33,12 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
         Active
       </Button>
       <Button
-        startIcon={<DoneIcon />}
         variant={filter === 'completed' ? 'contained' : 'outlined'}
         color="success"
         onClick={() => changeFilter('completed')}
       >
         Completed
       </Button>
-    </ButtonGroup>
+    </Stack>
   )
 }

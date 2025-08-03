@@ -18,7 +18,7 @@ export const Main = () => {
           <CreateItemForm onCreateItem={createTodolist} labelText={'Enter title todolist'} />
         </Paper>
       </Grid>
-      <Grid container spacing={4}>
+      <Grid container spacing={3}>
         <Todolists />
       </Grid>
     </Container>
