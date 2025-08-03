@@ -55,7 +55,7 @@ export const sxProps: Record<string, SxProps> = {
   captchaContainer: {
     display: 'flex',
     justifyContent: 'center',
-    my: 2,
+    width: '100%',
   },
 
   submitButton: {
