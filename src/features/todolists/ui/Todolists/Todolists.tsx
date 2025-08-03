@@ -22,8 +22,8 @@ export const Todolists = () => {
   return (
     <>
       {todolists?.map((todolist) => (
-        <Grid key={todolist.id}>
-          <Paper elevation={3} sx={{ p: '0 37px 37px 37px' }}>
+        <Grid key={todolist.id} size={{ xs: 12, sm: 6, md: 4 }}>
+          <Paper elevation={3} sx={{ p: '0 30px 30px 30px' }}>
             <TodolistItem todolist={todolist} />
           </Paper>
         </Grid>
