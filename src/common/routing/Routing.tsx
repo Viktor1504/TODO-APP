@@ -10,7 +10,7 @@ export const Path = {
   Main: '/TODO-APP/',
   Login: '/TODO-APP/login',
   Faq: '/TODO-APP/faq',
-  NotFound: '*',
+  NotFound: '/TODO-APP/*',
 } as const
 
 export const Routing = () => {
