@@ -7,10 +7,10 @@ import { useAppSelector } from '@/common/hooks'
 import { selectIsLoggedIn } from '@/app/appSlice.ts'
 
 export const Path = {
-  Main: '/TODO-APP/',
-  Login: '/TODO-APP/login',
-  Faq: '/TODO-APP/faq',
-  NotFound: '/TODO-APP/*',
+  Main: '/',
+  Login: '/login',
+  Faq: '/faq',
+  NotFound: '/*',
 } as const
 
 export const Routing = () => {
