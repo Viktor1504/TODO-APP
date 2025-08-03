@@ -15,10 +15,9 @@ import { useLoginMutation } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums.ts'
 import { AUTH_TOKEN } from '@/common/constants'
 import { FormLabel, Typography } from '@mui/material'
-import { useState } from 'react'
 
 export const Login = () => {
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  // const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const dispatch = useAppDispatch()
 
   const [login] = useLoginMutation()
@@ -41,7 +40,7 @@ export const Login = () => {
         localStorage.setItem(AUTH_TOKEN, res.data.data.token)
         reset()
         // Сбрасываем капчу после успешной авторизации
-        setCaptchaToken(null)
+        // setCaptchaToken(null)
       }
     })
   }
@@ -97,7 +96,7 @@ export const Login = () => {
               type="submit"
               variant="contained"
               color="primary"
-              disabled={!captchaToken} // Отключаем кнопку, если капча не пройдена
+              // disabled={!captchaToken} // Отключаем кнопку, если капча не пройдена
             >
               Login
             </Button>
