@@ -34,7 +34,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { sxProps } from '@/common/styles/login.styles.ts'
+import { sxProps } from '@/features/auth/ui/Login/login.styles.ts'
 import Alert from '@mui/material/Alert'
 
 export const Login = () => {

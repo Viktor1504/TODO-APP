@@ -18,7 +18,7 @@ export const sxProps: Record<string, SxProps> = {
 
   header: {
     background: 'linear-gradient(135deg, #667eea, #764ba2)',
-    p: 3,
+    p: 1,
     textAlign: 'center',
     color: 'white',
     position: 'relative',
@@ -81,7 +81,7 @@ export const sxProps: Record<string, SxProps> = {
   },
 
   divider: {
-    my: 3,
+    my: 2,
   },
 
   signupContainer: {
