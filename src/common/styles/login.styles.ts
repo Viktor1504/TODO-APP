@@ -7,7 +7,6 @@ export const sxProps: Record<string, SxProps> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    p: 2,
   },
 
   paper: {
@@ -19,7 +18,7 @@ export const sxProps: Record<string, SxProps> = {
 
   header: {
     background: 'linear-gradient(135deg, #667eea, #764ba2)',
-    p: 4,
+    p: 3,
     textAlign: 'center',
     color: 'white',
     position: 'relative',
@@ -54,7 +53,8 @@ export const sxProps: Record<string, SxProps> = {
 
   captchaContainer: {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
     width: '100%',
   },
 

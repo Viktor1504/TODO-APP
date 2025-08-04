@@ -24,6 +24,7 @@ import {
   CircularProgress,
   Container,
   Divider,
+  Fade,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -34,6 +35,7 @@ import {
   Typography,
 } from '@mui/material'
 import { sxProps } from '@/common/styles/login.styles.ts'
+import Alert from '@mui/material/Alert'
 
 export const Login = () => {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
@@ -99,6 +101,7 @@ export const Login = () => {
                     label="Email"
                     id="outlined-start-adornment"
                     type="email"
+                    placeholder="Введите email"
                     fullWidth
                     error={!!errors.email}
                     helperText={errors.email?.message}
@@ -117,6 +120,7 @@ export const Login = () => {
                     {...register('password')}
                     label="Пароль"
                     type={showPassword ? 'text' : 'password'}
+                    placeholder="Введите пароль"
                     fullWidth
                     error={!!errors.password}
                     helperText={errors.password?.message}
@@ -165,6 +169,11 @@ export const Login = () => {
 
                   <Box sx={sxProps.captchaContainer}>
                     <ReCAPTCHA sitekey="6LenmZgrAAAAAGsrhmmJ4dddzvGAWTgGv2v4BYek" onChange={handleCaptchaChange} />
+                    <Fade in={!captchaToken} timeout={2000}>
+                      <Alert severity="warning" sx={{ mt: 1, width: 'fit-content' }}>
+                        Для продолжения необходимо пройти проверку
+                      </Alert>
+                    </Fade>
                   </Box>
 
                   <Button
