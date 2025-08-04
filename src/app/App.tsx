@@ -6,10 +6,10 @@ import { selectThemeMode, setIsLoggedInAC } from '@/app/appSlice.ts'
 import { ErrorSnackbar, Header } from '@/common/components'
 import { Routing } from '@/common/routing'
 import { useEffect, useState } from 'react'
-import CircularProgress from '@mui/material/CircularProgress'
-import styles from './App.module.css'
 import { useMeQuery } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums.ts'
+import { Box, CircularProgress } from '@mui/material'
+import { sxPropsApp } from '@/app/App.styles.ts'
 
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -28,9 +28,9 @@ export const App = () => {
 
   if (!isInitialized) {
     return (
-      <div className={styles.circularProgressContainer}>
-        <CircularProgress size={150} thickness={3} />
-      </div>
+      <Box sx={sxPropsApp.circularProgressContainer}>
+        <CircularProgress size={150} thickness={3} color={'secondary'} />
+      </Box>
     )
   }
 
@@ -38,12 +38,12 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={styles.app}>
+      <Box>
         <CssBaseline />
         <Header />
         <Routing />
         <ErrorSnackbar />
-      </div>
+      </Box>
     </ThemeProvider>
   )
 }

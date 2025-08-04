@@ -1,6 +1,6 @@
 import { SxProps } from '@mui/material'
 
-export const sxProps: Record<string, SxProps> = {
+export const sxPropsLogin = {
   container: {
     minHeight: '100vh',
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -96,4 +96,4 @@ export const sxProps: Record<string, SxProps> = {
       textDecoration: 'underline',
     },
   },
-}
+} as const satisfies Record<string, SxProps>

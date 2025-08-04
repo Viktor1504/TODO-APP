@@ -14,7 +14,7 @@ export const Main = () => {
   return (
     <Container maxWidth={'lg'}>
       <Grid container sx={{ mb: '30px' }}>
-        <Paper sx={{ p: 3, display: 'block', width: '100%', boxSizing: 'border-box' }} elevation={3}>
+        <Paper sx={{ p: 3, display: 'block', width: '100%' }} elevation={3}>
           <CreateItemForm onCreateItem={createTodolist} labelText={'Enter title todolist'} />
         </Paper>
       </Grid>

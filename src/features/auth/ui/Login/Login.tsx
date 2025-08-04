@@ -34,7 +34,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { sxProps } from '@/features/auth/ui/Login/login.styles.ts'
+import { sxPropsLogin } from '@/features/auth/ui/Login/Login.styles.ts'
 import Alert from '@mui/material/Alert'
 
 export const Login = () => {
@@ -75,27 +75,27 @@ export const Login = () => {
   }
 
   return (
-    <Box sx={sxProps.container}>
+    <Box sx={sxPropsLogin.container}>
       <Container maxWidth="sm">
-        <Paper elevation={24} sx={sxProps.paper}>
+        <Paper elevation={24} sx={sxPropsLogin.paper}>
           {/* Header */}
-          <Box sx={sxProps.header}>
-            <Avatar sx={sxProps.avatar}>
+          <Box sx={sxPropsLogin.header}>
+            <Avatar sx={sxPropsLogin.avatar}>
               <TaskIcon sx={{ fontSize: 32 }} />
             </Avatar>
             <Typography variant="h4" fontWeight="bold" gutterBottom>
               TODO App
             </Typography>
-            <Typography variant="body1" sx={sxProps.subtitle}>
+            <Typography variant="body1" sx={sxPropsLogin.subtitle}>
               Добро пожаловать! Войдите в свой аккаунт
             </Typography>
           </Box>
 
           {/* Form */}
-          <Box sx={sxProps.formContainer}>
+          <Box sx={sxPropsLogin.formContainer}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormControl fullWidth>
-                <FormGroup sx={sxProps.formGroup}>
+                <FormGroup sx={sxPropsLogin.formGroup}>
                   <TextField
                     {...register('email')}
                     label="Email"
@@ -155,7 +155,7 @@ export const Login = () => {
                           <Checkbox
                             onChange={(e) => onChange(e.currentTarget.checked)}
                             checked={value}
-                            sx={sxProps.checkbox}
+                            sx={sxPropsLogin.checkbox}
                           />
                         )}
                       />
@@ -167,7 +167,7 @@ export const Login = () => {
                     }
                   />
 
-                  <Box sx={sxProps.captchaContainer}>
+                  <Box sx={sxPropsLogin.captchaContainer}>
                     <ReCAPTCHA sitekey="6LenmZgrAAAAAGsrhmmJ4dddzvGAWTgGv2v4BYek" onChange={handleCaptchaChange} />
                     <Fade in={!captchaToken} timeout={2000}>
                       <Alert severity="warning" sx={{ mt: 1, width: 'fit-content' }}>
@@ -182,7 +182,7 @@ export const Login = () => {
                     size="large"
                     disabled={!captchaToken || isLoading}
                     startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : <LoginIcon />}
-                    sx={sxProps.submitButton}
+                    sx={sxPropsLogin.submitButton}
                   >
                     {isLoading ? 'Вход...' : 'Войти в систему'}
                   </Button>
@@ -190,12 +190,12 @@ export const Login = () => {
               </FormControl>
             </form>
 
-            <Divider sx={sxProps.divider} />
+            <Divider sx={sxPropsLogin.divider} />
 
-            <Box sx={sxProps.signupContainer}>
+            <Box sx={sxPropsLogin.signupContainer}>
               <Typography variant="body2" color="text.secondary">
                 Нет аккаунта?{' '}
-                <Typography component="span" sx={sxProps.signupLink}>
+                <Typography component="span" sx={sxPropsLogin.signupLink}>
                   Зарегистрироваться
                 </Typography>
               </Typography>
