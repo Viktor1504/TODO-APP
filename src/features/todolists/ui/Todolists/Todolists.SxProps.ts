@@ -3,6 +3,7 @@ import { SxProps, Theme } from '@mui/material'
 export const todolistsSxProps = {
   // Карточка тудулиста
   todolistPaper: {
+    minWidth: '320px',
     borderRadius: 4,
     overflow: 'hidden',
     backdropFilter: 'blur(20px)',

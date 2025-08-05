@@ -38,8 +38,8 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
   const isCompleted = task.status === TaskStatus.Completed
 
   return (
-    <ListItem sx={{ ...taskItemSxProps.taskItem, ...(isCompleted ? taskItemSxProps.completedTask : {}) }}>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    <ListItem sx={{ ...(isCompleted ? taskItemSxProps.completedTask : {}) }}>
+      <Box sx={{ ...taskItemSxProps.taskItem, display: 'flex', alignItems: 'center', width: '100%', gap: 1 }}>
         <Checkbox checked={isCompleted} onChange={changeTaskStatus} />
         <EditableSpan value={task.title} onValueChange={changeTaskTitle} />
       </Box>

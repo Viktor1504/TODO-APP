@@ -11,21 +11,6 @@ export const tasksSxProps = {
   // Список задач
   tasksList: {
     maxHeight: '300px',
-    overflowY: 'auto',
-    '&::-webkit-scrollbar': {
-      width: 6,
-    },
-    '&::-webkit-scrollbar-track': {
-      background: 'rgba(0, 0, 0, 0.05)',
-      borderRadius: 3,
-    },
-    '&::-webkit-scrollbar-thumb': {
-      background: 'rgba(102, 126, 234, 0.3)',
-      borderRadius: 3,
-      '&:hover': {
-        background: 'rgba(102, 126, 234, 0.5)',
-      },
-    },
   },
 
   // Пагинация

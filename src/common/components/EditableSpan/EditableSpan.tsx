@@ -50,6 +50,8 @@ export const EditableSpan = ({ value, onValueChange, disabled, ...typographyProp
       onKeyDown={handleKeyDown}
       autoFocus
       fullWidth
+      multiline // позволяет многострочный ввод
+      maxRows={3} // максимум 3 строки
     />
   ) : (
     <Typography
@@ -57,6 +59,10 @@ export const EditableSpan = ({ value, onValueChange, disabled, ...typographyProp
       onDoubleClick={enableEditMode}
       sx={{
         cursor: disabled ? 'default' : 'pointer',
+        wordBreak: 'break-word', // перенос длинных слов
+        overflowWrap: 'break-word', // альтернативный способ переноса
+        whiteSpace: 'normal', // позволяет перенос строк
+        flex: 1, // занимает доступное пространство
         ...typographyProps.sx,
       }}
     >

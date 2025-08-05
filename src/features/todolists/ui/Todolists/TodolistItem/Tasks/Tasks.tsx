@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Box, List, Typography } from '@mui/material'
 import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem'
 import { TaskStatus } from '@/common/enums.ts'
@@ -26,6 +26,15 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
         return items
     }
   }, [tasks?.items, filter])
+
+  useEffect(() => {
+    if (tasks && !isLoading) {
+      // Если на странице нет задач, но общее количество больше 0, и мы не на первой странице
+      if (filteredTaskList.length === 0 && (tasks.totalCount || 0) > 0 && page > 1) {
+        setPage((prev) => prev - 1)
+      }
+    }
+  }, [tasks?.totalCount, filteredTaskList.length, page, isLoading])
 
   if (isLoading) {
     return <TasksSkeleton />
