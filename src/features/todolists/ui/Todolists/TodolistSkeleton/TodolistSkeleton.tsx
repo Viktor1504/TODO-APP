@@ -4,7 +4,12 @@ import Paper from '@mui/material/Paper'
 import Skeleton from '@mui/material/Skeleton'
 
 export const TodolistSkeleton = () => (
-  <Paper sx={{ width: 370, padding: '10px 20px' }}>
+  <Paper
+    sx={{
+      borderRadius: 4,
+      p: 3,
+    }}
+  >
     {/* Title Section */}
     <Box display="flex" alignItems="center" gap={'15px'}>
       <Skeleton width={150} height={50} />

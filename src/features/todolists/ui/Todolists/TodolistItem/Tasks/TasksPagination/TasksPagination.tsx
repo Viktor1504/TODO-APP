@@ -1,6 +1,5 @@
 import { PAGE_SIZE } from '@/common/constants'
 import Pagination from '@mui/material/Pagination'
-import Typography from '@mui/material/Typography'
 import { ChangeEvent } from 'react'
 
 type Props = {
@@ -16,21 +15,16 @@ export const TasksPagination = ({ totalCount, page, setPage }: Props) => {
   }
 
   return (
-    <>
-      <Pagination
-        count={paginationCount}
-        page={page}
-        color="primary"
-        onChange={changePage}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          visibility: paginationCount >= 2 ? 'visible' : 'hidden',
-        }}
-      />
-      <div>
-        <Typography variant="caption">Total: {totalCount}</Typography>
-      </div>
-    </>
+    <Pagination
+      count={paginationCount}
+      page={page}
+      color="primary"
+      onChange={changePage}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        visibility: paginationCount >= 2 ? 'visible' : 'hidden',
+      }}
+    />
   )
 }

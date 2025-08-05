@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
-import { List } from '@mui/material'
+import { Box, List, Typography } from '@mui/material'
 import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem'
 import { TaskStatus } from '@/common/enums.ts'
 import { useGetTasksQuery } from '@/features/todolists/api/tasksApi.ts'
 import { TasksSkeleton } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksSkeleton/TasksSkeleton.tsx'
 import { DomainTodolist } from '@/features/todolists/lib/types'
 import { TasksPagination } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksPagination/TasksPagination.tsx'
+import { tasksSxProps } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/Tasks.SxProps.ts'
 
 export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist
@@ -34,15 +35,20 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
     <>
       {filteredTaskList?.length > 0 ? (
         <>
-          <List>
+          <Box sx={tasksSxProps.taskCounter} mb={1}>
+            Total: {tasks?.totalCount || 0}
+          </Box>
+          <List sx={tasksSxProps.tasksList}>
             {filteredTaskList.map((task) => (
               <TaskItem key={task.id} task={task} todolist={todolist} />
             ))}
           </List>
-          <TasksPagination page={page} setPage={setPage} totalCount={tasks?.totalCount || 0} />
+          <Box sx={tasksSxProps.pagination}>
+            <TasksPagination page={page} setPage={setPage} totalCount={tasks?.totalCount || 0} />
+          </Box>
         </>
       ) : (
-        <p>No tasks</p>
+        <Typography sx={tasksSxProps.noTasksMessage}>No tasks</Typography>
       )}
     </>
   )

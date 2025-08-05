@@ -3,11 +3,11 @@ import { Box, Checkbox, ListItem } from '@mui/material'
 import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { getListItemSx } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.styles.ts'
 import { DomainTask, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types.ts'
 import { TaskStatus } from '@/common/enums.ts'
 import { useRemoveTaskMutation, useUpdateTaskMutation } from '@/features/todolists/api/tasksApi.ts'
 import { DomainTodolist } from '@/features/todolists/lib/types'
+import { taskItemSxProps } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.SxProps.ts'
 
 export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: DomainTodolist }) => {
   const [removeTask] = useRemoveTaskMutation()
@@ -35,10 +35,12 @@ export const TaskItem = ({ task, todolist }: { task: DomainTask; todolist: Domai
     updateTask({ todolistId: todolist.id, taskId: task.id, model: { ...baseUpdateModel, title } })
   }
 
+  const isCompleted = task.status === TaskStatus.Completed
+
   return (
-    <ListItem sx={getListItemSx(task.status)}>
+    <ListItem sx={{ ...taskItemSxProps.taskItem, ...(isCompleted ? taskItemSxProps.completedTask : {}) }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Checkbox checked={task.status === TaskStatus.Completed} onChange={changeTaskStatus} />
+        <Checkbox checked={isCompleted} onChange={changeTaskStatus} />
         <EditableSpan value={task.title} onValueChange={changeTaskTitle} />
       </Box>
       <IconButton onClick={deleteTask}>

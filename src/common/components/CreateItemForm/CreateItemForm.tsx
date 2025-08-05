@@ -1,8 +1,8 @@
 import { ChangeEvent, KeyboardEvent, useState } from 'react'
 import TextField from '@mui/material/TextField'
-import AddBoxIcon from '@mui/icons-material/AddBox'
 import IconButton from '@mui/material/IconButton'
 import { Box } from '@mui/material'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 
 export const CreateItemForm = ({
   onCreateItem,
@@ -56,7 +56,7 @@ export const CreateItemForm = ({
         disabled={disabled}
       />
       <IconButton color="primary" onClick={createItemHandler} disabled={disabled}>
-        <AddBoxIcon />
+        <AddCircleIcon fontSize={'large'} />
       </IconButton>
     </Box>
   )

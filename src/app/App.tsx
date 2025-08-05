@@ -38,7 +38,15 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          background:
+            themeMode === 'light'
+              ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+              : 'linear-gradient(135deg, #4a5fc1 0%, #5d3a82 100%)',
+        }}
+      >
         <CssBaseline />
         <Header />
         <Routing />

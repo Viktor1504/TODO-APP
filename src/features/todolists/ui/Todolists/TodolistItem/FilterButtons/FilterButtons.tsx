@@ -3,6 +3,7 @@ import { Stack } from '@mui/material'
 import Button from '@mui/material/Button'
 import { todolistsApi } from '@/features/todolists/api/todolistsApi.ts'
 import { DomainTodolist, FilterValues } from '@/features/todolists/lib/types'
+import { filterButtonsSxProps } from '@/features/todolists/ui/Todolists/TodolistItem/FilterButtons/FilterButtons.SxProps.ts'
 
 export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist
@@ -21,7 +22,7 @@ export const FilterButtons = ({ todolist }: { todolist: DomainTodolist }) => {
   }
 
   return (
-    <Stack direction="row" spacing={2} justifyContent={'center'}>
+    <Stack direction="row" spacing={1} justifyContent={'center'} sx={filterButtonsSxProps.filterButtons}>
       <Button variant={filter === 'all' ? 'contained' : 'outlined'} onClick={() => changeFilter('all')}>
         All
       </Button>

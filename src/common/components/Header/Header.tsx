@@ -1,7 +1,7 @@
 import AppBar from '@mui/material/AppBar'
 import { useAppSelector } from '@/common/hooks/useAppSelector.ts'
 import { useAppDispatch } from '@/common/hooks/useAppDispatch.ts'
-import { getTheme } from '@/common/theme/theme.ts' // Добавьте этот импорт
+import { getTheme } from '@/common/theme/theme.ts'
 import Toolbar from '@mui/material/Toolbar'
 import Container from '@mui/material/Container'
 import IconButton from '@mui/material/IconButton'
@@ -23,7 +23,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode'
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
-  const theme = getTheme(themeMode) // Получаем текущую тему
+  const theme = getTheme(themeMode)
   const status = useAppSelector(selectStatus)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 

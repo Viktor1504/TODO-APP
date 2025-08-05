@@ -46,9 +46,6 @@ export const sxPropsLogin = {
 
   checkbox: {
     color: '#667eea',
-    '&.Mui-checked': {
-      color: '#667eea',
-    },
   },
 
   captchaContainer: {

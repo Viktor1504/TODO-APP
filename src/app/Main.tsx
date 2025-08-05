@@ -14,11 +14,11 @@ export const Main = () => {
   return (
     <Container maxWidth={'lg'}>
       <Grid container sx={{ mb: '30px' }}>
-        <Paper sx={{ p: 3, display: 'block', width: '100%' }} elevation={3}>
+        <Paper sx={{ p: 3, display: 'block', width: '100%' }} elevation={10}>
           <CreateItemForm onCreateItem={createTodolist} labelText={'Enter title todolist'} />
         </Paper>
       </Grid>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ minHeight: '100vh' }}>
         <Todolists />
       </Grid>
     </Container>
