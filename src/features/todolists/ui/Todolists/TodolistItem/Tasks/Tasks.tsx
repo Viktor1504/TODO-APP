@@ -28,13 +28,10 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
   }, [tasks?.items, filter])
 
   useEffect(() => {
-    if (tasks && !isLoading) {
-      // Если на странице нет задач, но общее количество больше 0, и мы не на первой странице
-      if (filteredTaskList.length === 0 && (tasks.totalCount || 0) > 0 && page > 1) {
-        setPage((prev) => prev - 1)
-      }
+    if (!isLoading && page > 1 && filteredTaskList.length === 0) {
+      setPage((prevPage) => prevPage - 1)
     }
-  }, [tasks?.totalCount, filteredTaskList.length, page, isLoading])
+  }, [filteredTaskList, isLoading, page])
 
   if (isLoading) {
     return <TasksSkeleton />
@@ -42,7 +39,7 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
 
   return (
     <>
-      {filteredTaskList?.length > 0 ? (
+      {filteredTaskList ? (
         <>
           <Box sx={tasksSxProps.taskCounter} mb={1}>
             Total: {tasks?.totalCount || 0}
