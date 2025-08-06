@@ -1,10 +1,10 @@
 import { TodolistTitle } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle.tsx'
-import { CreateItemForm } from '@/common/components'
 import { FilterButtons, Tasks } from '@/features/todolists/ui/Todolists/TodolistItem'
 import { useAddTaskMutation } from '@/features/todolists/api/tasksApi.ts'
 import { Box, Divider } from '@mui/material'
 import { DomainTodolist } from '@/features/todolists/lib/types'
 import { todolistItemSxProps } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistItem.SxProps.ts'
+import { CreateItemForm } from '@/common/components'
 
 export const TodolistItem = ({ todolist }: { todolist: DomainTodolist }) => {
   const [addTask] = useAddTaskMutation()
