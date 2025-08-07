@@ -15,7 +15,7 @@ export const Main = () => {
     <Container maxWidth={'lg'}>
       <Grid container sx={{ mb: '30px' }}>
         <Paper sx={{ p: 3, display: 'block', width: '100%', minWidth: '320px' }} elevation={10}>
-          <CreateItemForm onCreateItem={createTodolist} labelText={'Enter title todolist'} />
+          <CreateItemForm onCreateItem={createTodolist} labelText={'Введите название списка'} />
         </Paper>
       </Grid>
       <Grid container spacing={3} sx={{ minHeight: '100vh' }}>

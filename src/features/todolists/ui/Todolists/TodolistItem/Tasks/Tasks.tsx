@@ -42,7 +42,7 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
       {filteredTaskList ? (
         <>
           <Box sx={tasksSxProps.taskCounter} mb={1}>
-            Total: {tasks?.totalCount || 0}
+            Всего: {tasks?.totalCount || 0}
           </Box>
           <List sx={tasksSxProps.tasksList}>
             {filteredTaskList.map((task) => (

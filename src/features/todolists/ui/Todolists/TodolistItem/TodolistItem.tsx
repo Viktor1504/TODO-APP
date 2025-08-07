@@ -18,7 +18,7 @@ export const TodolistItem = ({ todolist }: { todolist: DomainTodolist }) => {
       <TodolistTitle todolist={todolist} />
       <Box sx={todolistItemSxProps.todolistContent}>
         <Box sx={todolistItemSxProps.createTaskForm}>
-          <CreateItemForm onCreateItem={createTask} labelText={'Enter title task'} />
+          <CreateItemForm onCreateItem={createTask} labelText={'Введите название задачи'} />
         </Box>
         <Tasks todolist={todolist} />
         <Divider sx={todolistItemSxProps.divider} />
