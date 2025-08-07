@@ -8,10 +8,12 @@ import { DomainTodolist } from '@/features/todolists/lib/types'
 import { TasksPagination } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksPagination/TasksPagination.tsx'
 import { tasksSxProps } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/Tasks.SxProps.ts'
 
+const INITIAL_PAGE = 1
+
 export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
   const { id, filter } = todolist
 
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(INITIAL_PAGE)
 
   const { data: tasks, isLoading } = useGetTasksQuery({ todolistId: id, params: { page } })
 
@@ -28,7 +30,7 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
   }, [tasks?.items, filter])
 
   useEffect(() => {
-    if (!isLoading && page > 1 && filteredTaskList.length === 0) {
+    if (!isLoading && page > INITIAL_PAGE && filteredTaskList.length === 0) {
       setPage((prevPage) => prevPage - 1)
     }
   }, [filteredTaskList, isLoading, page])
@@ -39,7 +41,7 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
 
   return (
     <>
-      {filteredTaskList ? (
+      {filteredTaskList.length > 0 ? (
         <>
           <Box sx={tasksSxProps.taskCounter} mb={1}>
             Всего: {tasks?.totalCount || 0}
@@ -53,9 +55,9 @@ export const Tasks = ({ todolist }: { todolist: DomainTodolist }) => {
             <TasksPagination page={page} setPage={setPage} totalCount={tasks?.totalCount || 0} />
           </Box>
         </>
-      ) : (
+      ) : tasks?.totalCount === 0 ? (
         <Typography sx={tasksSxProps.noTasksMessage}>No tasks</Typography>
-      )}
+      ) : null}
     </>
   )
 }
